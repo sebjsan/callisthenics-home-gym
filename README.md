@@ -18,7 +18,7 @@ No other gear is programmed into the plan.
 - Progression path: scapular pulls -> dead hangs -> band-assisted pull-ups -> negatives -> chin-ups -> pull-ups
 - Push-up bar work for chest/shoulders/triceps with wrist-friendly depth
 - Band rows, pull-aparts, and face pulls to balance pressing
-- Hollow body, hanging knee raises, and planks for core transfer to the bar
+- Dedicated core track: hollow body → hanging knee / supported raises → hanging leg raises, plus dead bugs, reverse crunches, Pallof presses, and side planks
 - Day 29 is a light retest (max pull-ups, push-ups, hang); Day 30 is a celebration circuit
 
 ## Assumptions

@@ -39,7 +39,12 @@ export type AnimationId =
   | 'mountain-climber'
   | 'band-lat-pulldown'
   | 'incline-push-up'
-  | 'dip';
+  | 'dip'
+  | 'dead-bug'
+  | 'pallof-press'
+  | 'reverse-crunch'
+  | 'hanging-leg-raise'
+  | 'supported-knee-raise';
 
 export interface Exercise {
   id: string;

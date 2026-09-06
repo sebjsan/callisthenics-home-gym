@@ -21,6 +21,7 @@ export function WorkoutExerciseRow({ item, index }: Props) {
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl">
         <ExerciseAnimation
           animationId={ex.animationId}
+          alt={ex.name}
           variant="thumb"
           className="h-full w-full rounded-xl"
         />

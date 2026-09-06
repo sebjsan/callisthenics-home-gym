@@ -11,6 +11,8 @@ export type ExerciseAnimationVariant = 'full' | 'thumb';
 interface Props {
   animationId: AnimationId;
   className?: string;
+  /** Accessible description; defaults to humanized animationId */
+  alt?: string;
   /** full = detail demo with label; thumb = compact calendar/list thumbnail */
   variant?: ExerciseAnimationVariant;
 }
@@ -65,6 +67,8 @@ function familyOf(id: AnimationId): PoseFamily {
     case 'scapular-pull':
     case 'dead-hang':
     case 'hanging-knee-raise':
+    case 'hanging-leg-raise':
+    case 'supported-knee-raise':
     case 'band-assisted-pull-up':
     case 'band-lat-pulldown':
     case 'band-face-pull':
@@ -83,6 +87,8 @@ function familyOf(id: AnimationId): PoseFamily {
       return 'hinge';
     case 'glute-bridge':
     case 'hollow-hold':
+    case 'dead-bug':
+    case 'reverse-crunch':
       return 'supine';
     case 'cat-cow':
     case 'bird-dog':
@@ -126,6 +132,11 @@ function highlightOf(id: AnimationId): HighlightRegion {
     case 'side-plank':
     case 'hollow-hold':
     case 'hanging-knee-raise':
+    case 'hanging-leg-raise':
+    case 'supported-knee-raise':
+    case 'dead-bug':
+    case 'reverse-crunch':
+    case 'pallof-press':
     case 'mountain-climber':
     case 'dead-hang':
       return 'core';
@@ -145,13 +156,22 @@ function highlightOf(id: AnimationId): HighlightRegion {
 }
 
 /** Photo-first exercise demo keyed by animation id (SVG only if image fails). */
+function humanizeAnimationId(id: AnimationId): string {
+  return id
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
 export function ExerciseAnimation({
   animationId,
   className = '',
+  alt,
   variant = 'full',
 }: Props) {
   const [imgFailed, setImgFailed] = useState(false);
   const thumb = variant === 'thumb';
+  const imgAlt = alt?.trim() || humanizeAnimationId(animationId);
 
   if (imgFailed) {
     return (
@@ -168,18 +188,17 @@ export function ExerciseAnimation({
       className={`relative overflow-hidden border border-white/10 bg-gradient-to-b from-slate-900 to-[#070b14] ${
         thumb ? 'rounded-xl' : 'rounded-2xl'
       } ${className}`}
-      aria-hidden
     >
       <img
         src={exerciseImageUrl(animationId)}
-        alt=""
+        alt={imgAlt}
         loading="lazy"
         decoding="async"
         onError={() => setImgFailed(true)}
         className={
           thumb
-            ? 'absolute inset-0 h-full w-full object-cover'
-            : 'relative mx-auto block h-64 w-full object-cover sm:h-72'
+            ? 'absolute inset-0 h-full w-full object-cover brightness-110 contrast-105'
+            : 'relative mx-auto block h-64 w-full object-cover brightness-105 contrast-105 sm:h-72'
         }
       />
       {!thumb && (
@@ -412,7 +431,7 @@ function HangPose({ highlight, id }: { highlight: HighlightRegion; id: Animation
   const BODY = useBody();
   const SHORTS = useShorts();
 
-  const kneeRaise = id === 'hanging-knee-raise';
+  const kneeRaise = id === 'hanging-knee-raise' || id === 'hanging-leg-raise' || id === 'supported-knee-raise';
   return (
     <g className="figure-root hang-figure">
       <MuscleHighlight region={highlight} family="hang" />
@@ -844,6 +863,8 @@ function EquipmentLayer({ id }: { id: AnimationId }) {
     id === 'scapular-pull' ||
     id === 'dead-hang' ||
     id === 'hanging-knee-raise' ||
+    id === 'hanging-leg-raise' ||
+    id === 'supported-knee-raise' ||
     id === 'band-assisted-pull-up' ||
     id === 'band-lat-pulldown' ||
     id === 'band-face-pull' ||
@@ -864,7 +885,8 @@ function EquipmentLayer({ id }: { id: AnimationId }) {
     id === 'shoulder-opener' ||
     id === 'band-assisted-pull-up' ||
     id === 'band-lat-pulldown' ||
-    id === 'band-face-pull';
+    id === 'band-face-pull' ||
+    id === 'pallof-press';
 
   return (
     <g>
@@ -898,6 +920,8 @@ function EquipmentLayer({ id }: { id: AnimationId }) {
         id === 'plank' ||
         id === 'side-plank' ||
         id === 'hollow-hold' ||
+        id === 'dead-bug' ||
+        id === 'reverse-crunch' ||
         id === 'hip-opener' ||
         id === 'worlds-greatest-stretch') && (
         <rect

@@ -19,13 +19,13 @@ export function Layout() {
             </span>
             <div>
               <p className="text-sm font-semibold tracking-tight">Callisthenics Home Gym</p>
-              <p className="text-[10px] uppercase tracking-widest text-slate-500">30-day pull-up plan</p>
+              <p className="text-[10px] uppercase tracking-widest text-slate-500">30-day home station plan</p>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-lg flex-1 px-4 pb-24 pt-4">
+      <main className="mx-auto w-full max-w-lg flex-1 px-4 pt-4 pb-[calc(7rem+env(safe-area-inset-bottom))]">
         <Outlet />
       </main>
 

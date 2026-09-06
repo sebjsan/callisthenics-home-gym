@@ -6,7 +6,7 @@ export const plan: PlanDay[] = [
     day: 1,
     title: 'Foundation: Push + Hang',
     type: 'train',
-    focus: 'Push & grip intro',
+    focus: 'Push, grip & core brace',
     estimatedMinutes: 35,
     warmup: [
       { exerciseId: 'mat-cat-cow', sets: 1, restSec: 0, durationSec: 45 },
@@ -20,7 +20,7 @@ export const plan: PlanDay[] = [
       { exerciseId: 'pull-scapular', sets: 3, restSec: 45, reps: 8 },
       { exerciseId: 'pull-dead-hang', sets: 3, restSec: 60, durationSec: 20 },
       { exerciseId: 'mat-plank', sets: 3, restSec: 45, durationSec: 25 },
-      { exerciseId: 'mat-glute-bridge', sets: 2, restSec: 45, reps: 12 },
+      { exerciseId: 'mat-dead-bug', sets: 2, restSec: 45, reps: 8, notes: 'Each side — slow' },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -91,7 +91,7 @@ export const plan: PlanDay[] = [
       { exerciseId: 'band-squat', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'medium' },
       { exerciseId: 'band-row', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'medium' },
       { exerciseId: 'mat-side-plank', sets: 2, restSec: 45, durationSec: 20, notes: 'Each side' },
-      { exerciseId: 'band-pull-apart', sets: 2, restSec: 30, reps: 15, bandSuggestion: 'light' },
+      { exerciseId: 'mat-dead-bug', sets: 2, restSec: 40, reps: 8, notes: 'Each side' },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -116,7 +116,7 @@ export const plan: PlanDay[] = [
       { exerciseId: 'bar-dip', sets: 2, restSec: 75, reps: 5, notes: 'Flip to dip hooks first — band under knees OK' },
       { exerciseId: 'band-press', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'medium' },
       { exerciseId: 'bar-pike-push-up', sets: 3, restSec: 75, reps: 6, notes: 'Small range OK — quality over depth' },
-      { exerciseId: 'band-good-morning', sets: 2, restSec: 45, reps: 12, bandSuggestion: 'light' },
+      { exerciseId: 'mat-reverse-crunch', sets: 2, restSec: 45, reps: 10 },
       { exerciseId: 'mat-plank', sets: 3, restSec: 45, durationSec: 30 },
     ],
     cooldown: [
@@ -129,7 +129,7 @@ export const plan: PlanDay[] = [
     day: 6,
     title: 'Pull + Core',
     type: 'train',
-    focus: 'Lats & hollow body',
+    focus: 'Lats, hollow body & hanging knee raises',
     estimatedMinutes: 40,
     warmup: [
       { exerciseId: 'mat-cat-cow', sets: 1, restSec: 0, durationSec: 45 },
@@ -163,9 +163,9 @@ export const plan: PlanDay[] = [
   },
   {
     day: 8,
-    title: 'Push Progression + Dips',
+    title: 'Push Progression + Core',
     type: 'train',
-    focus: 'Full push-ups & station dips',
+    focus: 'Full push-ups, dips & reverse crunch',
     estimatedMinutes: 42,
     warmup: [
       { exerciseId: 'mat-cat-cow', sets: 1, restSec: 0, durationSec: 45 },
@@ -179,7 +179,7 @@ export const plan: PlanDay[] = [
       { exerciseId: 'bar-knee-push-up', sets: 2, restSec: 60, reps: 8, notes: 'Back-off sets' },
       { exerciseId: 'band-face-pull', sets: 3, restSec: 45, reps: 15, bandSuggestion: 'light' },
       { exerciseId: 'band-squat', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'medium' },
-      { exerciseId: 'mat-mountain-climber', sets: 2, restSec: 45, durationSec: 30 },
+      { exerciseId: 'mat-reverse-crunch', sets: 3, restSec: 45, reps: 10 },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -204,7 +204,7 @@ export const plan: PlanDay[] = [
       { exerciseId: 'band-assisted-pull-up', sets: 3, restSec: 90, reps: 6, bandSuggestion: 'heavy' },
       { exerciseId: 'band-row', sets: 4, restSec: 60, reps: 10, bandSuggestion: 'heavy' },
       { exerciseId: 'band-lat-pulldown', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'medium' },
-      { exerciseId: 'pull-dead-hang', sets: 3, restSec: 60, durationSec: 30 },
+      { exerciseId: 'mat-dead-bug', sets: 3, restSec: 40, reps: 8, notes: 'Each side' },
       { exerciseId: 'mat-hollow', sets: 3, restSec: 45, durationSec: 30 },
     ],
     cooldown: [
@@ -250,7 +250,8 @@ export const plan: PlanDay[] = [
       { exerciseId: 'band-squat', sets: 3, restSec: 60, reps: 15, bandSuggestion: 'medium' },
       { exerciseId: 'band-row', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'medium' },
       { exerciseId: 'bar-pike-push-up', sets: 3, restSec: 75, reps: 6 },
-      { exerciseId: 'mat-side-plank', sets: 3, restSec: 40, durationSec: 25, notes: 'Each side' },
+      { exerciseId: 'band-pallof', sets: 2, restSec: 45, reps: 10, notes: 'Each side', bandSuggestion: 'light' },
+      { exerciseId: 'mat-side-plank', sets: 2, restSec: 40, durationSec: 25, notes: 'Each side' },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -274,9 +275,9 @@ export const plan: PlanDay[] = [
       { exerciseId: 'bar-dip', sets: 3, restSec: 75, reps: 6, notes: 'Elbows track back; pause at bottom' },
       { exerciseId: 'bar-diamond-push-up', sets: 3, restSec: 75, reps: 6 },
       { exerciseId: 'bar-pike-push-up', sets: 3, restSec: 75, reps: 7 },
-      { exerciseId: 'band-pull-apart', sets: 3, restSec: 30, reps: 20, bandSuggestion: 'light' },
-      { exerciseId: 'band-good-morning', sets: 2, restSec: 45, reps: 12, bandSuggestion: 'medium' },
-      { exerciseId: 'mat-plank', sets: 3, restSec: 45, durationSec: 35 },
+      { exerciseId: 'band-pull-apart', sets: 2, restSec: 30, reps: 15, bandSuggestion: 'light' },
+      { exerciseId: 'mat-reverse-crunch', sets: 3, restSec: 40, reps: 12 },
+      { exerciseId: 'mat-plank', sets: 2, restSec: 45, durationSec: 35 },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -301,8 +302,8 @@ export const plan: PlanDay[] = [
       { exerciseId: 'pull-chin-up', sets: 3, restSec: 120, reps: 2, notes: 'Band assist OK — aim for 1–3 clean reps' },
       { exerciseId: 'pull-negative', sets: 3, restSec: 90, reps: 4 },
       { exerciseId: 'band-assisted-pull-up', sets: 3, restSec: 90, reps: 6, bandSuggestion: 'medium' },
-      { exerciseId: 'band-face-pull', sets: 3, restSec: 45, reps: 12, bandSuggestion: 'light' },
       { exerciseId: 'pull-hanging-knee', sets: 3, restSec: 60, reps: 10 },
+      { exerciseId: 'mat-hollow', sets: 2, restSec: 40, durationSec: 30 },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -336,9 +337,9 @@ export const plan: PlanDay[] = [
       { exerciseId: 'bar-push-up', sets: 3, restSec: 75, reps: 10 },
       { exerciseId: 'bar-dip', sets: 3, restSec: 75, reps: 8, notes: 'Full range on BDL dip handles' },
       { exerciseId: 'bar-diamond-push-up', sets: 3, restSec: 75, reps: 8 },
-      { exerciseId: 'bar-pike-push-up', sets: 2, restSec: 75, reps: 8 },
       { exerciseId: 'band-row', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
-      { exerciseId: 'mat-hollow', sets: 3, restSec: 40, durationSec: 30 },
+      { exerciseId: 'mat-hollow', sets: 2, restSec: 40, durationSec: 30 },
+      { exerciseId: 'mat-reverse-crunch', sets: 3, restSec: 40, reps: 12 },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -363,8 +364,8 @@ export const plan: PlanDay[] = [
       { exerciseId: 'pull-negative', sets: 3, restSec: 90, reps: 5, notes: '4–5 sec lowers' },
       { exerciseId: 'band-assisted-pull-up', sets: 3, restSec: 90, reps: 8, bandSuggestion: 'medium' },
       { exerciseId: 'band-row', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
-      { exerciseId: 'band-lat-pulldown', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
-      { exerciseId: 'pull-hanging-knee', sets: 3, restSec: 60, reps: 10 },
+      { exerciseId: 'band-lat-pulldown', sets: 2, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
+      { exerciseId: 'bar-supported-knee-raise', sets: 3, restSec: 60, reps: 10, notes: 'Flip to dip / leg-raise hooks' },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -393,9 +394,9 @@ export const plan: PlanDay[] = [
   },
   {
     day: 18,
-    title: 'Full-Body Power',
+    title: 'Full-Body Power + Core',
     type: 'train',
-    focus: 'Compound circuits',
+    focus: 'Compounds + anti-rotation',
     estimatedMinutes: 42,
     warmup: [
       { exerciseId: 'mat-cat-cow', sets: 1, restSec: 0, durationSec: 60 },
@@ -408,8 +409,9 @@ export const plan: PlanDay[] = [
       { exerciseId: 'pull-chin-up', sets: 3, restSec: 90, reps: 3 },
       { exerciseId: 'band-squat', sets: 3, restSec: 60, reps: 15, bandSuggestion: 'heavy' },
       { exerciseId: 'band-row', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
-      { exerciseId: 'bar-pike-push-up', sets: 3, restSec: 60, reps: 8 },
-      { exerciseId: 'mat-mountain-climber', sets: 3, restSec: 45, durationSec: 35 },
+      { exerciseId: 'bar-pike-push-up', sets: 2, restSec: 60, reps: 8 },
+      { exerciseId: 'band-pallof', sets: 3, restSec: 45, reps: 10, notes: 'Each side', bandSuggestion: 'medium' },
+      { exerciseId: 'mat-dead-bug', sets: 2, restSec: 40, reps: 8, notes: 'Each side' },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -433,9 +435,9 @@ export const plan: PlanDay[] = [
       { exerciseId: 'bar-pike-push-up', sets: 3, restSec: 75, reps: 8 },
       { exerciseId: 'bar-dip', sets: 3, restSec: 75, reps: 8 },
       { exerciseId: 'bar-diamond-push-up', sets: 3, restSec: 75, reps: 10 },
-      { exerciseId: 'band-face-pull', sets: 3, restSec: 45, reps: 15, bandSuggestion: 'light' },
+      { exerciseId: 'band-pallof', sets: 2, restSec: 45, reps: 10, notes: 'Each side', bandSuggestion: 'light' },
       { exerciseId: 'mat-hollow', sets: 3, restSec: 40, durationSec: 35 },
-      { exerciseId: 'mat-side-plank', sets: 3, restSec: 40, durationSec: 30, notes: 'Each side' },
+      { exerciseId: 'mat-side-plank', sets: 2, restSec: 40, durationSec: 30, notes: 'Each side' },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -461,8 +463,7 @@ export const plan: PlanDay[] = [
       { exerciseId: 'pull-chin-up', sets: 3, restSec: 90, reps: 4 },
       { exerciseId: 'pull-negative', sets: 3, restSec: 90, reps: 4 },
       { exerciseId: 'band-row', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
-      { exerciseId: 'pull-dead-hang', sets: 2, restSec: 60, durationSec: 40 },
-      { exerciseId: 'pull-hanging-knee', sets: 3, restSec: 60, reps: 12 },
+      { exerciseId: 'bar-supported-knee-raise', sets: 3, restSec: 60, reps: 12, notes: 'Flip to dip / leg-raise hooks' },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -497,8 +498,8 @@ export const plan: PlanDay[] = [
       { exerciseId: 'bar-dip', sets: 4, restSec: 75, reps: 8, notes: 'Quality lockouts on BDL handles' },
       { exerciseId: 'bar-diamond-push-up', sets: 3, restSec: 75, reps: 10 },
       { exerciseId: 'bar-pike-push-up', sets: 3, restSec: 75, reps: 8 },
-      { exerciseId: 'band-pull-apart', sets: 3, restSec: 30, reps: 20, bandSuggestion: 'light' },
-      { exerciseId: 'mat-plank', sets: 3, restSec: 45, durationSec: 40 },
+      { exerciseId: 'mat-reverse-crunch', sets: 3, restSec: 40, reps: 12 },
+      { exerciseId: 'mat-plank', sets: 2, restSec: 45, durationSec: 40 },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -523,8 +524,8 @@ export const plan: PlanDay[] = [
       { exerciseId: 'pull-chin-up', sets: 3, restSec: 90, reps: 5 },
       { exerciseId: 'band-assisted-pull-up', sets: 3, restSec: 75, reps: 8, notes: 'Light band for volume', bandSuggestion: 'light' },
       { exerciseId: 'band-row', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
-      { exerciseId: 'band-face-pull', sets: 3, restSec: 45, reps: 15, bandSuggestion: 'medium' },
-      { exerciseId: 'mat-hollow', sets: 3, restSec: 40, durationSec: 35 },
+      { exerciseId: 'pull-hanging-leg-raise', sets: 3, restSec: 60, reps: 6, notes: 'Bend knees to regress' },
+      { exerciseId: 'mat-hollow', sets: 2, restSec: 40, durationSec: 35 },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -568,9 +569,9 @@ export const plan: PlanDay[] = [
       { exerciseId: 'pull-up', sets: 4, restSec: 90, reps: 2 },
       { exerciseId: 'band-squat', sets: 3, restSec: 60, reps: 15, bandSuggestion: 'heavy' },
       { exerciseId: 'band-row', sets: 3, restSec: 50, reps: 15, bandSuggestion: 'heavy' },
-      { exerciseId: 'bar-pike-push-up', sets: 3, restSec: 60, reps: 8 },
-      { exerciseId: 'pull-hanging-knee', sets: 3, restSec: 50, reps: 12 },
-      { exerciseId: 'mat-mountain-climber', sets: 2, restSec: 40, durationSec: 40 },
+      { exerciseId: 'bar-pike-push-up', sets: 2, restSec: 60, reps: 8 },
+      { exerciseId: 'pull-hanging-leg-raise', sets: 3, restSec: 50, reps: 8 },
+      { exerciseId: 'band-pallof', sets: 2, restSec: 40, reps: 10, notes: 'Each side', bandSuggestion: 'medium' },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -580,9 +581,9 @@ export const plan: PlanDay[] = [
   },
   {
     day: 26,
-    title: 'Upper Body Finisher',
+    title: 'Upper + Anti-Rotation Core',
     type: 'train',
-    focus: 'Push/pull + station dips',
+    focus: 'Dips, chin-ups & Pallof press',
     estimatedMinutes: 42,
     warmup: [
       { exerciseId: 'mat-cat-cow', sets: 1, restSec: 0, durationSec: 45 },
@@ -595,8 +596,8 @@ export const plan: PlanDay[] = [
       { exerciseId: 'bar-diamond-push-up', sets: 3, restSec: 70, reps: 10 },
       { exerciseId: 'pull-chin-up', sets: 4, restSec: 90, reps: 4 },
       { exerciseId: 'band-lat-pulldown', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
-      { exerciseId: 'band-face-pull', sets: 3, restSec: 40, reps: 15, bandSuggestion: 'light' },
-      { exerciseId: 'mat-side-plank', sets: 3, restSec: 40, durationSec: 30, notes: 'Each side' },
+      { exerciseId: 'band-pallof', sets: 3, restSec: 40, reps: 10, notes: 'Each side', bandSuggestion: 'medium' },
+      { exerciseId: 'mat-side-plank', sets: 2, restSec: 40, durationSec: 30, notes: 'Each side' },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -621,8 +622,9 @@ export const plan: PlanDay[] = [
       { exerciseId: 'pull-negative', sets: 3, restSec: 90, reps: 4, notes: 'Slow lowers after fresh sets' },
       { exerciseId: 'band-assisted-pull-up', sets: 2, restSec: 75, reps: 10, bandSuggestion: 'light' },
       { exerciseId: 'band-row', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
-      { exerciseId: 'pull-dead-hang', sets: 2, restSec: 60, durationSec: 45 },
-      { exerciseId: 'mat-hollow', sets: 3, restSec: 40, durationSec: 40 },
+      { exerciseId: 'bar-supported-knee-raise', sets: 2, restSec: 50, reps: 12, notes: 'Quality control on pad' },
+      { exerciseId: 'pull-hanging-leg-raise', sets: 2, restSec: 60, reps: 8 },
+      { exerciseId: 'mat-hollow', sets: 2, restSec: 40, durationSec: 40 },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -658,8 +660,9 @@ export const plan: PlanDay[] = [
       { exerciseId: 'pull-dead-hang', sets: 1, restSec: 120, durationSec: 1, notes: 'Max hang time — record seconds' },
       { exerciseId: 'pull-chin-up', sets: 3, restSec: 90, reps: 5, notes: 'Clean volume after testing' },
       { exerciseId: 'bar-pike-push-up', sets: 3, restSec: 75, reps: 8 },
-      { exerciseId: 'band-row', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
-      { exerciseId: 'mat-hollow', sets: 2, restSec: 45, durationSec: 40 },
+      { exerciseId: 'band-row', sets: 2, restSec: 60, reps: 12, bandSuggestion: 'heavy' },
+      { exerciseId: 'mat-hollow', sets: 2, restSec: 40, durationSec: 40 },
+      { exerciseId: 'mat-reverse-crunch', sets: 2, restSec: 40, reps: 12 },
     ],
     cooldown: [
       { exerciseId: 'mat-hip-opener', sets: 1, restSec: 0, durationSec: 60 },
@@ -686,7 +689,8 @@ export const plan: PlanDay[] = [
       { exerciseId: 'band-squat', sets: 2, restSec: 50, reps: 12, bandSuggestion: 'medium' },
       { exerciseId: 'band-row', sets: 2, restSec: 50, reps: 12, bandSuggestion: 'medium' },
       { exerciseId: 'bar-pike-push-up', sets: 2, restSec: 50, reps: 8 },
-      { exerciseId: 'pull-hanging-knee', sets: 2, restSec: 50, reps: 10 },
+      { exerciseId: 'pull-hanging-leg-raise', sets: 2, restSec: 50, reps: 8 },
+      { exerciseId: 'band-pallof', sets: 2, restSec: 40, reps: 8, notes: 'Each side', bandSuggestion: 'light' },
       { exerciseId: 'mat-plank', sets: 2, restSec: 40, durationSec: 40 },
     ],
     cooldown: [

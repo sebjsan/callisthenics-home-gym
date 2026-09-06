@@ -21,6 +21,7 @@ export function Home() {
           >
             <ExerciseAnimation
               animationId={getHeroAnimationId(today)}
+              alt={today.title}
               variant="thumb"
               className="h-full w-full rounded-2xl"
             />
@@ -132,7 +133,8 @@ export function Home() {
           Beginner → intermediate progression over 30 days with ~5–6 training days per week.
           Sessions run about 30–45 minutes and build toward unassisted pull-ups using negatives,
           scapular work, and band assistance — balanced with push-up bar pressing, BDL station dips,
-          and mat mobility.
+          and mat mobility. Core progresses from hollow holds to hanging knee/supported raises and
+          Pallof anti-rotation work so every train day has a clear core finisher.
         </p>
         <Link to="/calendar" className="mt-3 inline-block text-sm font-medium text-cyan-400 hover:text-cyan-300">
           Open 30-day calendar →

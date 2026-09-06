@@ -32,7 +32,7 @@ export function ExerciseDetail() {
         <p className="mt-1 text-sm text-slate-400">{ex.description}</p>
       </div>
 
-      <ExerciseAnimation animationId={ex.animationId} />
+      <ExerciseAnimation animationId={ex.animationId} alt={ex.name} />
 
       <div className="flex flex-wrap gap-1.5">
         {ex.equipment.map((eq) => (
@@ -43,14 +43,18 @@ export function ExerciseDetail() {
       <section className="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
         <h2 className="text-sm font-semibold text-slate-200">Primary muscles</h2>
         <div className="mt-2 flex flex-wrap gap-2">
-          {ex.muscles.map((m) => (
-            <span
-              key={m}
-              className="rounded-lg bg-slate-800 px-2.5 py-1 text-xs capitalize text-slate-300"
-            >
-              {m}
-            </span>
-          ))}
+          {ex.muscles.length === 0 ? (
+            <p className="text-xs text-slate-500">No primary muscles listed.</p>
+          ) : (
+            ex.muscles.map((m) => (
+              <span
+                key={m}
+                className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-2.5 py-1 text-xs font-medium capitalize text-slate-200"
+              >
+                {m}
+              </span>
+            ))
+          )}
         </div>
       </section>
 

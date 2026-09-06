@@ -26,7 +26,7 @@ export function Calendar() {
       </div>
 
       {/* Mobile-first rich grid: 2 cols → 3 → 4 */}
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
         {plan.map((d) => {
           const done = isCompleted(d.day);
           const animId = getHeroAnimationId(d);
@@ -46,9 +46,10 @@ export function Calendar() {
                 done ? 'ring-2 ring-emerald-400/70' : ''
               }`}
             >
-              <div className={`relative aspect-[4/5] w-full overflow-hidden ${rest ? 'opacity-70' : ''}`}>
+              <div className={`relative aspect-[3/4] w-full overflow-hidden ${rest ? 'opacity-70' : ''}`}>
                 <ExerciseAnimation
                   animationId={animId}
+                  alt={`${d.title} — ${heroLabel(d)}`}
                   variant="thumb"
                   className="absolute inset-0 h-full w-full rounded-none border-0"
                 />
@@ -68,8 +69,8 @@ export function Calendar() {
                   </span>
                 )}
                 <div className="absolute inset-x-0 bottom-0 p-2.5">
-                  <p className="truncate text-[11px] font-semibold text-white">{d.title}</p>
-                  <p className="truncate text-[10px] text-slate-400">{heroLabel(d)}</p>
+                  <p className="line-clamp-2 text-[11px] font-semibold leading-snug text-white">{d.title}</p>
+                  <p className="mt-0.5 line-clamp-1 text-[10px] text-slate-300">{heroLabel(d)}</p>
                 </div>
               </div>
             </Link>
@@ -103,6 +104,7 @@ export function Calendar() {
                 >
                   <ExerciseAnimation
                     animationId={animId}
+                    alt={`${d.title} — ${heroLabel(d)}`}
                     variant="thumb"
                     className="h-full w-full rounded-xl"
                   />
@@ -115,7 +117,7 @@ export function Calendar() {
                   </span>
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-slate-100">{d.title}</p>
+                  <p className="line-clamp-2 text-sm font-medium leading-snug text-slate-100">{d.title}</p>
                   <p className="truncate text-xs text-slate-500">
                     {heroLabel(d)}
                     {d.focus && d.type !== 'rest' ? ` · ${d.focus}` : ''}
