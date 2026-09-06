@@ -1,5 +1,10 @@
-import { createContext, useContext, useId } from 'react';
+import { createContext, useContext, useId, useState } from 'react';
 import type { AnimationId } from '../data/types';
+
+/** Public URL for a generated exercise photo (respects Vite/GitHub Pages base). */
+export function exerciseImageUrl(animationId: AnimationId): string {
+  return `${import.meta.env.BASE_URL}exercises/${animationId}.png`;
+}
 
 export type ExerciseAnimationVariant = 'full' | 'thumb';
 
@@ -137,8 +142,55 @@ function highlightOf(id: AnimationId): HighlightRegion {
   }
 }
 
-/** Looping athletic male 2D demos keyed by exercise animation id. */
+/** Photo-first exercise demo keyed by animation id (SVG only if image fails). */
 export function ExerciseAnimation({
+  animationId,
+  className = '',
+  variant = 'full',
+}: Props) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const thumb = variant === 'thumb';
+
+  if (imgFailed) {
+    return (
+      <SvgExerciseFallback
+        animationId={animationId}
+        className={className}
+        variant={variant}
+      />
+    );
+  }
+
+  return (
+    <div
+      className={`relative overflow-hidden border border-white/10 bg-gradient-to-b from-slate-900 to-[#070b14] ${
+        thumb ? 'rounded-xl' : 'rounded-2xl'
+      } ${className}`}
+      aria-hidden
+    >
+      <img
+        src={exerciseImageUrl(animationId)}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        onError={() => setImgFailed(true)}
+        className={
+          thumb
+            ? 'absolute inset-0 h-full w-full object-cover'
+            : 'relative mx-auto block h-64 w-full object-cover sm:h-72'
+        }
+      />
+      {!thumb && (
+        <p className="pb-2 pt-1 text-center text-[10px] uppercase tracking-widest text-slate-500">
+          Form demo
+        </p>
+      )}
+    </div>
+  );
+}
+
+/** Stick-figure SVG used only when the exercise PNG fails to load. */
+function SvgExerciseFallback({
   animationId,
   className = '',
   variant = 'full',
@@ -197,7 +249,7 @@ export function ExerciseAnimation({
         </svg>
         {!thumb && (
           <p className="pb-2 text-center text-[10px] uppercase tracking-widest text-slate-500">
-            Looping form demo
+            Form demo
           </p>
         )}
       </div>
