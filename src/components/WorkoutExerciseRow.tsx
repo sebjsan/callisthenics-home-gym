@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { getExercise } from '../data/exercises';
 import type { WorkoutExercise } from '../data/types';
 import { EquipmentBadge } from './EquipmentBadge';
+import { ExerciseAnimation } from './ExerciseAnimation';
 
 interface Props {
   item: WorkoutExercise;
@@ -15,12 +16,19 @@ export function WorkoutExerciseRow({ item, index }: Props) {
   return (
     <Link
       to={`/exercise/${ex.id}`}
-      className="group flex gap-3 rounded-xl border border-white/5 bg-white/[0.03] p-3 transition hover:border-cyan-500/30 hover:bg-cyan-500/5"
+      className="group flex gap-3 rounded-xl border border-white/5 bg-white/[0.03] p-2.5 transition hover:border-cyan-500/30 hover:bg-cyan-500/5"
     >
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-sm font-semibold text-cyan-400">
-        {index + 1}
+      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl">
+        <ExerciseAnimation
+          animationId={ex.animationId}
+          variant="thumb"
+          className="h-full w-full rounded-xl"
+        />
+        <span className="absolute left-1 top-1 flex h-5 w-5 items-center justify-center rounded-md bg-black/65 text-[10px] font-bold text-cyan-300">
+          {index + 1}
+        </span>
       </div>
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1 py-0.5">
         <div className="flex items-start justify-between gap-2">
           <h3 className="truncate text-sm font-semibold text-slate-100 group-hover:text-cyan-300">
             {ex.name}

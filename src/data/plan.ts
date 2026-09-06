@@ -1,4 +1,5 @@
-import type { PlanDay } from './types';
+import { getExercise } from './exercises';
+import type { AnimationId, PlanDay } from './types';
 
 export const plan: PlanDay[] = [
   {
@@ -698,6 +699,15 @@ export const plan: PlanDay[] = [
 
 export function getDay(day: number): PlanDay | undefined {
   return plan.find((d) => d.day === day);
+}
+
+
+/** Hero male-figure animation for a plan day (calendar thumbs, today card). */
+export function getHeroAnimationId(day: PlanDay): AnimationId {
+  const hero = day.main[0] ?? day.warmup[0];
+  if (hero) return getExercise(hero.exerciseId).animationId;
+  // Rest / empty days: calm male recovery pose (easy dead hang)
+  return 'dead-hang';
 }
 
 export function getTodayPlanDay(completedDays: number[]): PlanDay {

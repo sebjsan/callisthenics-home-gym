@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { DayTypeBadge } from '../components/DayTypeBadge';
+import { ExerciseAnimation } from '../components/ExerciseAnimation';
 import { useProgressContext } from '../context/ProgressContext';
-import { getTodayPlanDay, TOTAL_DAYS, TRAIN_DAYS } from '../data/plan';
+import { getHeroAnimationId, getTodayPlanDay, TOTAL_DAYS, TRAIN_DAYS } from '../data/plan';
 
 export function Home() {
   const { progress, completedCount, isCompleted } = useProgressContext();
@@ -11,29 +12,48 @@ export function Home() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-violet-500/5 to-transparent p-5">
-        <p className="text-xs font-medium uppercase tracking-widest text-cyan-400/80">Today&apos;s focus</p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight text-white">
-          Day {today.day}: {today.title}
-        </h1>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <DayTypeBadge type={today.type} />
-          {today.estimatedMinutes > 0 && (
-            <span className="text-xs text-slate-400">~{today.estimatedMinutes} min</span>
-          )}
-          {done && (
-            <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-emerald-300">
-              Completed
-            </span>
-          )}
+      <section className="overflow-hidden rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-violet-500/5 to-transparent">
+        <div className="flex gap-3 p-4 sm:p-5">
+          <div
+            className={`relative h-28 w-24 shrink-0 overflow-hidden rounded-2xl sm:h-32 sm:w-28 ${
+              today.type === 'rest' ? 'opacity-75' : ''
+            }`}
+          >
+            <ExerciseAnimation
+              animationId={getHeroAnimationId(today)}
+              variant="thumb"
+              className="h-full w-full rounded-2xl"
+            />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-medium uppercase tracking-widest text-cyan-400/80">
+              Today&apos;s focus
+            </p>
+            <h1 className="mt-1 text-xl font-bold tracking-tight text-white sm:text-2xl">
+              Day {today.day}: {today.title}
+            </h1>
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <DayTypeBadge type={today.type} />
+              {today.estimatedMinutes > 0 && (
+                <span className="text-xs text-slate-400">~{today.estimatedMinutes} min</span>
+              )}
+              {done && (
+                <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-emerald-300">
+                  Completed
+                </span>
+              )}
+            </div>
+            <p className="mt-2 line-clamp-3 text-sm text-slate-300">{today.focus}</p>
+          </div>
         </div>
-        <p className="mt-3 text-sm text-slate-300">{today.focus}</p>
-        <Link
-          to={`/day/${today.day}`}
-          className="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-ink shadow-lg shadow-cyan-500/25 transition hover:bg-cyan-400"
-        >
-          {today.type === 'rest' ? 'View rest day' : done ? 'Review workout' : 'Start workout'}
-        </Link>
+        <div className="px-4 pb-4 sm:px-5 sm:pb-5">
+          <Link
+            to={`/day/${today.day}`}
+            className="inline-flex w-full items-center justify-center rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-ink shadow-lg shadow-cyan-500/25 transition hover:bg-cyan-400"
+          >
+            {today.type === 'rest' ? 'View rest day' : done ? 'Review workout' : 'Start workout'}
+          </Link>
+        </div>
       </section>
 
       <section className="grid grid-cols-3 gap-3">

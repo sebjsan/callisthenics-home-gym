@@ -1,8 +1,41 @@
+import { createContext, useContext, useId } from 'react';
 import type { AnimationId } from '../data/types';
+
+export type ExerciseAnimationVariant = 'full' | 'thumb';
 
 interface Props {
   animationId: AnimationId;
   className?: string;
+  /** full = detail demo with label; thumb = compact calendar/list thumbnail */
+  variant?: ExerciseAnimationVariant;
+}
+
+type SvgThemeIds = { bodyFill: string; shortsFill: string; muscleGlow: string };
+
+const SvgTheme = createContext<SvgThemeIds>({
+  bodyFill: 'bodyFill',
+  shortsFill: 'shortsFill',
+  muscleGlow: 'muscleGlow',
+});
+
+function useBody() {
+  const { bodyFill } = useContext(SvgTheme);
+  return {
+    fill: `url(#${bodyFill})`,
+    stroke: '#67e8f9',
+    strokeWidth: 1.6,
+    strokeLinejoin: 'round' as const,
+  };
+}
+
+function useShorts() {
+  const { shortsFill } = useContext(SvgTheme);
+  return {
+    fill: `url(#${shortsFill})`,
+    stroke: '#22d3ee',
+    strokeWidth: 1.4,
+    strokeOpacity: 0.55,
+  };
 }
 
 type PoseFamily =
@@ -105,65 +138,72 @@ function highlightOf(id: AnimationId): HighlightRegion {
 }
 
 /** Looping athletic male 2D demos keyed by exercise animation id. */
-export function ExerciseAnimation({ animationId, className = '' }: Props) {
+export function ExerciseAnimation({
+  animationId,
+  className = '',
+  variant = 'full',
+}: Props) {
+  const uid = useId().replace(/:/g, '');
   const family = familyOf(animationId);
   const highlight = highlightOf(animationId);
+  const thumb = variant === 'thumb';
+  // Unique defs per instance so many calendar thumbs don't clash.
+  const bodyFill = `chg-body-${uid}`;
+  const shortsFill = `chg-shorts-${uid}`;
+  const muscleGlow = `chg-glow-${uid}`;
+
   return (
-    <div
-      className={`relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-slate-900 to-[#070b14] ${className}`}
-      aria-hidden
-    >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(34,211,238,0.14),transparent_55%)]" />
-      <svg
-        viewBox="0 0 200 240"
-        className={`anim-${animationId} anim-family-${family} relative mx-auto block h-64 w-full sm:h-72`}
+    <SvgTheme.Provider value={{ bodyFill, shortsFill, muscleGlow }}>
+      <div
+        className={`relative overflow-hidden border border-white/10 bg-gradient-to-b from-slate-900 to-[#070b14] ${
+          thumb ? 'rounded-xl' : 'rounded-2xl'
+        } ${className}`}
+        aria-hidden
       >
-        <defs>
-          <linearGradient id="bodyFill" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#475569" />
-            <stop offset="55%" stopColor="#334155" />
-            <stop offset="100%" stopColor="#1e293b" />
-          </linearGradient>
-          <linearGradient id="shortsFill" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#0f172a" />
-            <stop offset="100%" stopColor="#020617" />
-          </linearGradient>
-          <linearGradient id="skinEdge" x1="0%" y1="0%" x2="1" y2="1">
-            <stop offset="0%" stopColor="#67e8f9" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.25" />
-          </linearGradient>
-          <filter id="muscleGlow" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="3.5" result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <ellipse cx="100" cy="220" rx="78" ry="8" className="fill-cyan-500/15" />
-        <EquipmentLayer id={animationId} />
-        <Pose family={family} highlight={highlight} animationId={animationId} />
-      </svg>
-      <p className="pb-2 text-center text-[10px] uppercase tracking-widest text-slate-500">
-        Looping form demo
-      </p>
-    </div>
+        <div
+          className={`pointer-events-none absolute inset-0 ${
+            thumb
+              ? 'bg-[radial-gradient(ellipse_at_50%_20%,rgba(34,211,238,0.12),transparent_60%)]'
+              : 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(34,211,238,0.14),transparent_55%)]'
+          }`}
+        />
+        <svg
+          viewBox="0 0 200 240"
+          className={`anim-${animationId} anim-family-${family} relative mx-auto block w-full ${
+            thumb ? 'h-full min-h-[4.5rem]' : 'h-64 sm:h-72'
+          }`}
+        >
+          <defs>
+            <linearGradient id={bodyFill} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#475569" />
+              <stop offset="55%" stopColor="#334155" />
+              <stop offset="100%" stopColor="#1e293b" />
+            </linearGradient>
+            <linearGradient id={shortsFill} x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#0f172a" />
+              <stop offset="100%" stopColor="#020617" />
+            </linearGradient>
+            <filter id={muscleGlow} x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation={thumb ? 2.5 : 3.5} result="b" />
+              <feMerge>
+                <feMergeNode in="b" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <ellipse cx="100" cy="220" rx="78" ry="8" className="fill-cyan-500/15" />
+          <EquipmentLayer id={animationId} />
+          <Pose family={family} highlight={highlight} animationId={animationId} />
+        </svg>
+        {!thumb && (
+          <p className="pb-2 text-center text-[10px] uppercase tracking-widest text-slate-500">
+            Looping form demo
+          </p>
+        )}
+      </div>
+    </SvgTheme.Provider>
   );
 }
-
-const BODY = {
-  fill: 'url(#bodyFill)',
-  stroke: '#67e8f9',
-  strokeWidth: 1.6,
-  strokeLinejoin: 'round' as const,
-};
-
-const SHORTS = {
-  fill: 'url(#shortsFill)',
-  stroke: '#22d3ee',
-  strokeWidth: 1.4,
-  strokeOpacity: 0.55,
-};
 
 function MaleHead({
   cx,
@@ -213,9 +253,10 @@ function MuscleHighlight({
   family: PoseFamily;
 }) {
   if (region === 'none') return null;
+  const { muscleGlow } = useContext(SvgTheme);
   const common = {
     className: 'muscle-hl',
-    filter: 'url(#muscleGlow)',
+    filter: `url(#${muscleGlow})`,
     fill: 'rgba(251, 146, 60, 0.35)',
     stroke: 'rgba(249, 115, 22, 0.55)',
     strokeWidth: 1,
@@ -314,6 +355,9 @@ function Pose({
 
 /** Hanging from bar — pull-ups, chin-ups, hangs, knee raises */
 function HangPose({ highlight, id }: { highlight: HighlightRegion; id: AnimationId }) {
+  const BODY = useBody();
+  const SHORTS = useShorts();
+
   const kneeRaise = id === 'hanging-knee-raise';
   return (
     <g className="figure-root hang-figure">
@@ -378,6 +422,9 @@ function PushPose({
   id: AnimationId;
   plank: boolean;
 }) {
+  const BODY = useBody();
+  const SHORTS = useShorts();
+
   const knees = id === 'knee-push-up';
   const climb = id === 'mountain-climber';
   const row = id === 'australian-row';
@@ -438,6 +485,9 @@ function PushPose({
 }
 
 function PikePose({ highlight }: { highlight: HighlightRegion }) {
+  const BODY = useBody();
+  const SHORTS = useShorts();
+
   return (
     <g className="figure-root pike-figure">
       <MuscleHighlight region={highlight} family="pike" />
@@ -471,6 +521,9 @@ function PikePose({ highlight }: { highlight: HighlightRegion }) {
 }
 
 function StandPose({ highlight, id }: { highlight: HighlightRegion; id: AnimationId }) {
+  const BODY = useBody();
+  const SHORTS = useShorts();
+
   const squat = id === 'band-squat';
   return (
     <g className={`figure-root stand-figure ${squat ? 'is-squat' : ''}`}>
@@ -518,6 +571,9 @@ function StandPose({ highlight, id }: { highlight: HighlightRegion; id: Animatio
 }
 
 function HingePose({ highlight }: { highlight: HighlightRegion }) {
+  const BODY = useBody();
+  const SHORTS = useShorts();
+
   return (
     <g className="figure-root hinge-figure">
       <MuscleHighlight region={highlight} family="hinge" />
@@ -549,6 +605,9 @@ function HingePose({ highlight }: { highlight: HighlightRegion }) {
 }
 
 function SupinePose({ highlight, id }: { highlight: HighlightRegion; id: AnimationId }) {
+  const BODY = useBody();
+  const SHORTS = useShorts();
+
   const hollow = id === 'hollow-hold';
   return (
     <g className={`figure-root supine-figure ${hollow ? 'is-hollow' : ''}`}>
@@ -607,6 +666,9 @@ function SupinePose({ highlight, id }: { highlight: HighlightRegion; id: Animati
 }
 
 function QuadPose({ highlight, id }: { highlight: HighlightRegion; id: AnimationId }) {
+  const BODY = useBody();
+  const SHORTS = useShorts();
+
   const bird = id === 'bird-dog';
   return (
     <g className={`figure-root quad-figure ${bird ? 'is-bird' : ''}`}>
@@ -653,6 +715,9 @@ function QuadPose({ highlight, id }: { highlight: HighlightRegion; id: Animation
 }
 
 function SidePose({ highlight }: { highlight: HighlightRegion }) {
+  const BODY = useBody();
+  const SHORTS = useShorts();
+
   return (
     <g className="figure-root side-figure">
       <MuscleHighlight region={highlight} family="side" />
@@ -684,6 +749,9 @@ function SidePose({ highlight }: { highlight: HighlightRegion }) {
 }
 
 function LungePose({ highlight }: { highlight: HighlightRegion }) {
+  const BODY = useBody();
+  const SHORTS = useShorts();
+
   return (
     <g className="figure-root lunge-figure">
       <MuscleHighlight region={highlight} family="lunge" />
