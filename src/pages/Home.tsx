@@ -77,11 +77,38 @@ export function Home() {
 
       <section className="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
         <h2 className="text-sm font-semibold text-slate-200">Your kit</h2>
+
+        <a
+          href="https://a.co/d/0ar2Fena"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 flex gap-3 overflow-hidden rounded-xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-slate-900/40 to-transparent p-3 transition hover:border-cyan-400/40"
+        >
+          <img
+            src={`${import.meta.env.BASE_URL}kit/bdl-station.png`}
+            alt="BDL wall pull-up and dip station"
+            className="h-24 w-20 shrink-0 rounded-lg object-cover ring-1 ring-white/10 sm:h-28 sm:w-24"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-white">BDL wall pull-up + dip station</p>
+            <p className="mt-0.5 text-[10px] uppercase tracking-wider text-cyan-400/80">
+              Featured hardware · Amazon
+            </p>
+            <ul className="mt-2 space-y-1 text-xs text-slate-400">
+              <li className="flex gap-2"><Bullet /> Multi-grip pulls (wide / parallel / narrow)</li>
+              <li className="flex gap-2"><Bullet /> Forward dip handles for station dips</li>
+              <li className="flex gap-2"><Bullet /> Back-pad + arm rests for knee raises</li>
+              <li className="flex gap-2"><Bullet /> Band / TRX suspension anchors · 440 lb</li>
+            </ul>
+          </div>
+        </a>
+
         <ul className="mt-3 space-y-2 text-sm text-slate-400">
           <li className="flex gap-2"><Bullet /> Yoga mat</li>
           <li className="flex gap-2"><Bullet /> Floor push-up bars</li>
           <li className="flex gap-2"><Bullet /> Resistance bands (light / medium / heavy)</li>
-          <li className="flex gap-2"><Bullet /> Wall-mounted pull-up / chin-up bar (BDL)</li>
         </ul>
       </section>
 
@@ -90,7 +117,8 @@ export function Home() {
         <p className="mt-2 leading-relaxed">
           Beginner → intermediate progression over 30 days with ~5–6 training days per week.
           Sessions run about 30–45 minutes and build toward unassisted pull-ups using negatives,
-          scapular work, and band assistance — balanced with push-up bar pressing and mat mobility.
+          scapular work, and band assistance — balanced with push-up bar pressing, BDL station dips,
+          and mat mobility.
         </p>
         <Link to="/calendar" className="mt-3 inline-block text-sm font-medium text-cyan-400 hover:text-cyan-300">
           Open 30-day calendar →

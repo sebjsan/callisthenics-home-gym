@@ -38,7 +38,8 @@ export type AnimationId =
   | 'hollow-hold'
   | 'mountain-climber'
   | 'band-lat-pulldown'
-  | 'incline-push-up';
+  | 'incline-push-up'
+  | 'dip';
 
 export interface Exercise {
   id: string;

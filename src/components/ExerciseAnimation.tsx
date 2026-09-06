@@ -75,6 +75,7 @@ function familyOf(id: AnimationId): PoseFamily {
     case 'incline-push-up':
     case 'mountain-climber':
     case 'australian-row':
+    case 'dip':
       return 'push';
     case 'pike-push-up':
       return 'pike';
@@ -119,6 +120,7 @@ function highlightOf(id: AnimationId): HighlightRegion {
     case 'knee-push-up':
     case 'incline-push-up':
     case 'band-press':
+    case 'dip':
       return 'chest';
     case 'plank':
     case 'side-plank':
@@ -844,7 +846,8 @@ function EquipmentLayer({ id }: { id: AnimationId }) {
     id === 'hanging-knee-raise' ||
     id === 'band-assisted-pull-up' ||
     id === 'band-lat-pulldown' ||
-    id === 'band-face-pull';
+    id === 'band-face-pull' ||
+    id === 'dip';
   const bars =
     id === 'push-up' ||
     id === 'diamond-push-up' ||

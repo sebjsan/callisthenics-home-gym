@@ -6,7 +6,7 @@ const LABELS: Record<Equipment, string> = {
   'resistance-band-light': 'Light band',
   'resistance-band-medium': 'Medium band',
   'resistance-band-heavy': 'Heavy band',
-  'pull-up-bar': 'Pull-up bar (BDL)',
+  'pull-up-bar': 'BDL station',
 };
 
 const COLORS: Record<Equipment, string> = {
