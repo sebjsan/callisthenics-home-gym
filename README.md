@@ -5,9 +5,9 @@ A polished **Vite + React + TypeScript + Tailwind CSS** progressive web app for 
 ## Equipment (only)
 
 - Yoga mat
-- Flor push-up bars
+- Floor push-up bars
 - Resistance bands (light / medium / heavy)
-- Wall-mounted pull-up / chin-up bar (BDL)
+- **BDL wall-hook pull-up / dip station** ([Amazon](https://a.co/d/0ar2Fena)) — one black-steel piece that **flips and remounts** on different wall-hook heights for pull-up orientation vs dip / leg-raise orientation. Hangs on wall hooks only (no floor-standing posts or power-rack rails). Orange-and-black spiral grips, arm pads, back cushion, multi-grip bar, dip handles, accessory rings.
 
 No other gear is programmed into the plan.
 
@@ -24,8 +24,8 @@ No other gear is programmed into the plan.
 ## Assumptions
 
 - You can get into a basic plank and hang from a bar for a few seconds
-- Your wall bar (BDL) is securely mounted and rated for dynamic bodyweight use
-- Bands can be looped over the pull-up bar for assistance and lat pulldowns
+- Your BDL station is hung on securely installed wall hooks and rated for dynamic bodyweight use; flip/remount between pull-up and dip hook heights as needed
+- Bands can be looped over the multi-grip bar (pull-up orientation) for assistance and lat pulldowns
 - Progress is tracked in localStorage on the device (no account / backend)
 - Pain is not progress - skip or regress any movement that hurts joints
 

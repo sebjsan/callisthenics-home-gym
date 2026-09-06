@@ -82,27 +82,41 @@ export function Home() {
           href="https://a.co/d/0ar2Fena"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3 flex gap-3 overflow-hidden rounded-xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-slate-900/40 to-transparent p-3 transition hover:border-cyan-400/40"
+          className="mt-3 block overflow-hidden rounded-xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-slate-900/40 to-transparent transition hover:border-cyan-400/40"
         >
+          <div className="flex gap-3 p-3">
+            <img
+              src={`${import.meta.env.BASE_URL}kit/bdl-station.png`}
+              alt="BDL wall-mounted pull-up and dip station on hooks"
+              className="h-24 w-20 shrink-0 rounded-lg object-cover ring-1 ring-white/10 sm:h-28 sm:w-24"
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-semibold text-white">BDL wall pull-up + dip station</p>
+              <p className="mt-0.5 text-[10px] uppercase tracking-wider text-cyan-400/80">
+                Featured hardware · Amazon
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-400">
+                One black-steel piece that hangs on wall hooks only — flip and remount at different
+                hook heights for pull-ups vs dips / leg raises. Orange-and-black spiral grips, arm
+                pads, back cushion, multi-grip bar, dip handles, and accessory rings. No floor posts
+                or rack rails.
+              </p>
+            </div>
+          </div>
           <img
-            src={`${import.meta.env.BASE_URL}kit/bdl-station.png`}
-            alt="BDL wall pull-up and dip station"
-            className="h-24 w-20 shrink-0 rounded-lg object-cover ring-1 ring-white/10 sm:h-28 sm:w-24"
+            src={`${import.meta.env.BASE_URL}kit/bdl-flip-modes.png`}
+            alt="Flip between pull-up bar and dip station orientations on wall hooks"
+            className="w-full border-t border-white/5 object-cover object-top"
             loading="lazy"
             decoding="async"
           />
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold text-white">BDL wall pull-up + dip station</p>
-            <p className="mt-0.5 text-[10px] uppercase tracking-wider text-cyan-400/80">
-              Featured hardware · Amazon
-            </p>
-            <ul className="mt-2 space-y-1 text-xs text-slate-400">
-              <li className="flex gap-2"><Bullet /> Multi-grip pulls (wide / parallel / narrow)</li>
-              <li className="flex gap-2"><Bullet /> Forward dip handles for station dips</li>
-              <li className="flex gap-2"><Bullet /> Back-pad + arm rests for knee raises</li>
-              <li className="flex gap-2"><Bullet /> Band / TRX suspension anchors · 440 lb</li>
-            </ul>
-          </div>
+          <ul className="space-y-1 border-t border-white/5 px-3 py-2.5 text-xs text-slate-400">
+            <li className="flex gap-2"><Bullet /> Flip + remount on higher hooks for multi-grip pull-ups</li>
+            <li className="flex gap-2"><Bullet /> Flip to lower hooks for dip handles + supported leg raises</li>
+            <li className="flex gap-2"><Bullet /> Band / ring anchors · rated ~440 lb</li>
+          </ul>
         </a>
 
         <ul className="mt-3 space-y-2 text-sm text-slate-400">

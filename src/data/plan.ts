@@ -113,7 +113,7 @@ export const plan: PlanDay[] = [
     ],
     main: [
       { exerciseId: 'bar-knee-push-up', sets: 3, restSec: 60, reps: 10 },
-      { exerciseId: 'bar-dip', sets: 2, restSec: 75, reps: 5, notes: 'BDL forward handles — band under knees OK' },
+      { exerciseId: 'bar-dip', sets: 2, restSec: 75, reps: 5, notes: 'Flip to dip hooks first — band under knees OK' },
       { exerciseId: 'band-press', sets: 3, restSec: 60, reps: 12, bandSuggestion: 'medium' },
       { exerciseId: 'bar-pike-push-up', sets: 3, restSec: 75, reps: 6, notes: 'Small range OK — quality over depth' },
       { exerciseId: 'band-good-morning', sets: 2, restSec: 45, reps: 12, bandSuggestion: 'light' },
