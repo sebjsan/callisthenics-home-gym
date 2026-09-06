@@ -1,0 +1,180 @@
+
+/* Exercise animation keyframes */
+@keyframes chg-dip {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(12px); }
+}
+@keyframes chg-pull {
+  0%, 100% { transform: translateY(22px); }
+  45%, 55% { transform: translateY(0); }
+}
+@keyframes chg-scap {
+  0%, 100% { transform: translateY(16px); }
+  50% { transform: translateY(6px); }
+}
+@keyframes chg-sway {
+  0%, 100% { transform: translateY(8px) rotate(-1.5deg); }
+  50% { transform: translateY(14px) rotate(1.5deg); }
+}
+@keyframes chg-squat {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(14px) scaleY(0.93); }
+}
+@keyframes chg-row {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-6px, -4px); }
+}
+@keyframes chg-press {
+  0%, 100% { transform: scaleX(0.94); }
+  50% { transform: scaleX(1.06); }
+}
+@keyframes chg-open {
+  0%, 100% { transform: scaleX(0.88); }
+  50% { transform: scaleX(1.12); }
+}
+@keyframes chg-hinge {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(12deg); }
+}
+@keyframes chg-bridge {
+  0%, 100% { transform: translateY(8px); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes chg-hollow {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+@keyframes chg-cat {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.9) translateY(4px); }
+}
+@keyframes chg-bird {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+@keyframes chg-side {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+@keyframes chg-lunge {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+@keyframes chg-climb {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(5px) rotate(2deg); }
+}
+@keyframes chg-pike {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+@keyframes chg-raise {
+  0%, 100% { transform: translateY(12px); }
+  50% { transform: translateY(2px) scaleY(0.92); }
+}
+@keyframes chg-pulse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(2px); }
+}
+
+.anim-family-hang .figure-root,
+.anim-family-push .figure-root,
+.anim-family-pike .figure-root,
+.anim-family-stand .figure-root,
+.anim-family-hinge .figure-root,
+.anim-family-quadruped .figure-root,
+.anim-family-supine .figure-root,
+.anim-family-plank .figure-root,
+.anim-family-side .figure-root,
+.anim-family-lunge .figure-root {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.anim-push-up .figure-root,
+.anim-diamond-push-up .figure-root,
+.anim-knee-push-up .figure-root,
+.anim-incline-push-up .figure-root,
+.anim-plank .figure-root,
+.anim-australian-row .figure-root {
+  animation: chg-dip 1.5s ease-in-out infinite;
+  transform-origin: 100px 130px;
+}
+.anim-pike-push-up .figure-root {
+  animation: chg-pike 1.6s ease-in-out infinite;
+  transform-origin: 100px 120px;
+}
+.anim-pull-up .figure-root,
+.anim-chin-up .figure-root,
+.anim-negative-pull-up .figure-root,
+.anim-band-assisted-pull-up .figure-root,
+.anim-band-lat-pulldown .figure-root {
+  animation: chg-pull 2s ease-in-out infinite;
+  transform-origin: 100px 40px;
+}
+.anim-scapular-pull .figure-root {
+  animation: chg-scap 1.8s ease-in-out infinite;
+  transform-origin: 100px 40px;
+}
+.anim-dead-hang .figure-root {
+  animation: chg-sway 2.5s ease-in-out infinite;
+  transform-origin: 100px 36px;
+}
+.anim-hanging-knee-raise .figure-root {
+  animation: chg-raise 1.6s ease-in-out infinite;
+  transform-origin: 100px 40px;
+}
+.anim-band-face-pull .figure-root {
+  animation: chg-open 1.5s ease-in-out infinite;
+  transform-origin: 100px 70px;
+}
+.anim-band-row .figure-root {
+  animation: chg-row 1.4s ease-in-out infinite;
+  transform-origin: 100px 100px;
+}
+.anim-band-press .figure-root {
+  animation: chg-press 1.4s ease-in-out infinite;
+  transform-origin: 100px 90px;
+}
+.anim-band-pull-apart .figure-root,
+.anim-shoulder-opener .figure-root {
+  animation: chg-open 1.5s ease-in-out infinite;
+  transform-origin: 100px 70px;
+}
+.anim-band-squat .figure-root {
+  animation: chg-squat 1.5s ease-in-out infinite;
+  transform-origin: 100px 160px;
+}
+.anim-band-good-morning .figure-root {
+  animation: chg-hinge 1.8s ease-in-out infinite;
+  transform-origin: 100px 115px;
+}
+.anim-glute-bridge .figure-root {
+  animation: chg-bridge 1.6s ease-in-out infinite;
+  transform-origin: 100px 140px;
+}
+.anim-hollow-hold .figure-root {
+  animation: chg-hollow 2s ease-in-out infinite;
+  transform-origin: 100px 130px;
+}
+.anim-cat-cow .figure-root {
+  animation: chg-cat 2s ease-in-out infinite;
+  transform-origin: 100px 120px;
+}
+.anim-bird-dog .figure-root {
+  animation: chg-bird 2s ease-in-out infinite;
+  transform-origin: 100px 110px;
+}
+.anim-side-plank .figure-root {
+  animation: chg-side 2.2s ease-in-out infinite;
+  transform-origin: 100px 120px;
+}
+.anim-hip-opener .figure-root,
+.anim-worlds-greatest-stretch .figure-root {
+  animation: chg-lunge 2.2s ease-in-out infinite;
+  transform-origin: 100px 140px;
+}
+.anim-mountain-climber .figure-root {
+  animation: chg-climb 0.65s ease-in-out infinite;
+  transform-origin: 100px 130px;
+}
