@@ -10,7 +10,7 @@ import { ProgressPage } from './pages/Progress';
 export default function App() {
   return (
     <ProgressProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "") || "/"}>
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Home />} />
