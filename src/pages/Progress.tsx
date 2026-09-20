@@ -66,7 +66,7 @@ export function ProgressPage() {
               <Link
                 key={d}
                 to={`/day/${d}`}
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/20 text-sm font-semibold text-emerald-300"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500/20 text-sm font-semibold text-cyan-300"
               >
                 {d}
               </Link>

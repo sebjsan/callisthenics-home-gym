@@ -930,7 +930,7 @@ function EquipmentLayer({ id }: { id: AnimationId }) {
           width="130"
           height="10"
           rx="3"
-          className="fill-emerald-500/25 stroke-emerald-400/40"
+          className="fill-cyan-500/25 stroke-cyan-400/40"
           strokeWidth="1"
         />
       )}

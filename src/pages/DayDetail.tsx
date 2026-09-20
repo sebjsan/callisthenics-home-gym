@@ -178,7 +178,7 @@ export function DayDetail() {
         onClick={() => toggleDay(day.day)}
         className={`w-full rounded-xl px-4 py-3 text-sm font-semibold transition ${
           done
-            ? "border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20"
+            ? "border border-cyan-500/40 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20"
             : "bg-cyan-500 text-ink shadow-lg shadow-cyan-500/20 hover:bg-cyan-400"
         }`}
       >

@@ -35,14 +35,14 @@ body {
 
 /* A quiet training surface with one clear action color. */
 @theme {
-  --color-ink: #101411;
-  --color-cyan-300: #dbf7aa;
-  --color-cyan-400: #c3ee84;
-  --color-cyan-500: #b4e66a;
-  --color-violet-500: #74a845;
+  --color-ink: #11151b;
+  --color-cyan-300: #c6d8ee;
+  --color-cyan-400: #9db9dc;
+  --color-cyan-500: #7e9fc8;
+  --color-violet-500: #617fa6;
 }
 body {
-  background: #101411;
+  background: #11151b;
 }
 a,
 button,
@@ -54,7 +54,7 @@ button {
   cursor: pointer;
 }
 :focus-visible {
-  outline: 2px solid #c3ee84;
+  outline: 2px solid #9db9dc;
   outline-offset: 5px;
 }
 .page-heading {
@@ -73,7 +73,7 @@ button {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.15em;
-  color: #c3ee84;
+  color: #9db9dc;
   margin-bottom: 12px;
 }
 .streak-pill,
@@ -85,8 +85,8 @@ button {
   white-space: nowrap;
 }
 .streak-pill {
-  background: #c3ee8410;
-  color: #c3ee84;
+  background: #9db9dc10;
+  color: #9db9dc;
 }
 .hero-workout {
   display: grid;
@@ -94,7 +94,7 @@ button {
   border: 1px solid #ffffff14;
   border-radius: 24px;
   overflow: hidden;
-  background: #1b241c;
+  background: #1c2430;
 }
 .hero-copy {
   padding: 32px;
@@ -133,8 +133,8 @@ button {
   justify-content: center;
   gap: 28px;
   padding: 15px 22px;
-  background: #c3ee84;
-  color: #17210d;
+  background: #9db9dc;
+  color: #101b2b;
   font-size: 14px;
   font-weight: 700;
   border-radius: 12px;
@@ -142,7 +142,7 @@ button {
   transition: background 0.15s;
 }
 .primary-button:hover {
-  background: #d4f4a7;
+  background: #b8cde6;
 }
 .secondary-button {
   display: inline-flex;
@@ -160,7 +160,7 @@ button {
 .panel {
   padding: 23px;
   border: 1px solid #ffffff12;
-  background: #191e1a;
+  background: #1a2029;
   border-radius: 18px;
 }
 .dashboard-grid {
@@ -182,7 +182,7 @@ button {
 }
 .section-heading a {
   font-size: 12px;
-  color: #c3ee84;
+  color: #9db9dc;
 }
 .section-heading .eyebrow {
   margin-bottom: 6px;
@@ -200,7 +200,7 @@ button {
   padding: 12px 2px;
   border: 1px solid #ffffff10;
   border-radius: 11px;
-  color: #a4aca5;
+  color: #a6aeba;
 }
 .week-day span {
   font-size: 8px;
@@ -214,15 +214,15 @@ button {
   font-size: 9px;
 }
 .week-day.current {
-  border-color: #c3ee84;
-  background: #c3ee8410;
+  border-color: #9db9dc;
+  background: #9db9dc10;
 }
 .week-day.complete {
-  background: #c3ee84;
-  color: #26311c;
+  background: #9db9dc;
+  color: #172538;
 }
 .week-day.complete strong {
-  color: #26311c;
+  color: #172538;
 }
 .plan-progress {
   width: 100%;
@@ -239,11 +239,11 @@ button {
   background: #ffffff12;
 }
 .plan-progress::-webkit-progress-value {
-  background: #c3ee84;
+  background: #9db9dc;
   border-radius: 99px;
 }
 .plan-progress::-moz-progress-bar {
-  background: #c3ee84;
+  background: #9db9dc;
   border-radius: 99px;
 }
 .foundation-grid {
@@ -255,11 +255,11 @@ button {
   overflow: hidden;
   border: 1px solid #ffffff14;
   border-radius: 18px;
-  background: #191e1a;
+  background: #1a2029;
   transition: border-color 0.15s;
 }
 .foundation-card:hover {
-  border-color: #c3ee84;
+  border-color: #9db9dc;
 }
 .foundation-card h3 {
   display: flex;
@@ -276,7 +276,7 @@ button {
 .form-input {
   display: block;
   width: 100%;
-  background: #101411;
+  background: #11151b;
   border: 1px solid #ffffff30;
   border-radius: 10px;
   padding: 13px;
@@ -297,7 +297,7 @@ button {
   font-size: 13px;
   letter-spacing: 0;
   font-weight: 400;
-  color: #a4aca5;
+  color: #a6aeba;
   margin-top: 4px;
 }
 .session-layout {
@@ -369,7 +369,7 @@ button {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  accent-color: #c3ee84;
+  accent-color: #9db9dc;
 }
 .skill-step {
   display: flex;
@@ -382,7 +382,7 @@ button {
 }
 .skill-step small {
   display: block;
-  color: #9ba59d;
+  color: #9faabb;
   font-size: 11px;
   margin-top: 4px;
 }
@@ -397,8 +397,8 @@ button {
   border: 1px solid #ffffff30;
 }
 .skill-number.practiced {
-  background: #c3ee84;
-  color: #17210d;
+  background: #9db9dc;
+  color: #101b2b;
 }
 .favorite-button {
   display: block;
@@ -407,10 +407,10 @@ button {
   padding: 12px 16px;
   text-align: left;
   font-size: 12px;
-  color: #c3ee84;
+  color: #9db9dc;
 }
 .favorite-button:hover {
-  background: #c3ee8410;
+  background: #9db9dc10;
 }
 .effort-options {
   display: grid;
@@ -430,7 +430,7 @@ button {
   font-size: 13px;
 }
 .effort-options input {
-  accent-color: #c3ee84;
+  accent-color: #9db9dc;
 }
 .history-row {
   display: flex;
