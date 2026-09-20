@@ -57,6 +57,10 @@ export function DayDetail() {
         </p>
       </div>
 
+      <section className="panel text-sm space-y-2">
+        <p className="eyebrow">{day.phase} · Balanced Foundations</p>
+        <p>{day.coaching}</p>
+      </section>
       {day.type === "rest" ? (
         <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-5 text-sm leading-relaxed text-slate-300">
           Full rest day. Sleep well, walk if you like, and keep hydration up.

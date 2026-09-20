@@ -33,7 +33,7 @@ test("dashboard, library filters, empty state, and finale navigation", async ({
   await expect(page.getByRole("searchbox")).toHaveValue("");
   await page.getByRole("link", { name: "Plan", exact: true }).click();
   await page.getByRole("button", { name: /WEEK 4/ }).click();
-  await page.getByRole("link", { name: /Graduation Circuit/ }).click();
+  await page.getByRole("link", { name: /Review & Choose Your Next Block/ }).click();
   await expect(
     page.getByRole("heading", { name: "Day 30", exact: true }),
   ).toBeVisible();
@@ -59,11 +59,11 @@ test("timer pauses, resumes, and session preserves position after reload", async
   await expect(page.getByRole("status")).toContainText("Time complete");
   await page.getByRole("button", { name: "Complete set" }).click();
   await expect(
-    page.getByRole("heading", { name: "Shoulder Opener", exact: true }),
+    page.getByRole("heading", { name: "Easy March", exact: true }),
   ).toBeVisible();
   await page.reload();
   await expect(
-    page.getByRole("heading", { name: "Shoulder Opener", exact: true }),
+    page.getByRole("heading", { name: "Easy March", exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "Start timer" })).toBeVisible();
   await expect(page.locator(".timer-display")).toContainText("0:45");
@@ -85,12 +85,12 @@ test("full session saves once and retry does not duplicate history", async ({
     page.getByRole("heading", { name: "That’s a strong finish." }),
   ).toBeVisible();
   await page.reload();
-  const pending = await page.evaluate(() => Object.entries(sessionStorage).find(([key]) => key.startsWith('chg-session-v2-'))!);
+  const pending = await page.evaluate(() => Object.entries(sessionStorage).find(([key]) => key.startsWith('chg-session-v3-'))!);
   await page.getByRole("button", { name: "Save workout" }).click();
   await expect(page.getByRole("status")).toContainText("Workout saved");
   expect(
     await page.evaluate(
-      () => JSON.parse(localStorage.getItem("chg-progress-v1")!).completedDays,
+      () => JSON.parse(localStorage.getItem("chg-progress-balanced-v2")!).completedDays,
     ),
   ).toEqual([1]);
   await page.evaluate(([key, value]) => sessionStorage.setItem(key!, value!), pending);
@@ -98,7 +98,7 @@ test("full session saves once and retry does not duplicate history", async ({
   await page.getByRole("button", { name: "Save workout" }).click();
   expect(
     await page.evaluate(
-      () => JSON.parse(localStorage.getItem("chg-progress-v1")!).completedDays,
+      () => JSON.parse(localStorage.getItem("chg-progress-balanced-v2")!).completedDays,
     ),
   ).toEqual([1]);
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('chg-training-v1')!).history.length)).toBe(1);

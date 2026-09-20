@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { getDay } from "../data/plan";
+import { getDay, PROGRAM_ID } from "../data/plan";
 import { getExercise, exercises } from "../data/exercises";
 import { buildSession } from "../data/session";
 import { adaptPlan, type SetLog, type WorkoutLog } from "../data/training";
@@ -89,7 +89,7 @@ export function Workout() {
   return (
     <Session
       key={signature}
-      storageKey={`chg-session-v2-${signature}`}
+      storageKey={`chg-session-v3-${PROGRAM_ID}-${signature}`}
       day={adapted.day}
       shortened={adapted.shortened}
       options={options.toString()}
@@ -142,6 +142,8 @@ function Session({
       step.kind === "work" && value !== undefined
         ? {
             exerciseId: step.item.exerciseId,
+            perSide:
+              step.item.notes?.toLowerCase().includes("each side") || undefined,
             band: step.item.bandSuggestion,
             value,
             unit:
@@ -225,6 +227,7 @@ function Session({
                 className="primary-button"
                 onClick={() => {
                   saveWorkout({
+                    programId: PROGRAM_ID,
                     id: session.id,
                     day: day.day,
                     title: day.title,
@@ -309,6 +312,7 @@ function Session({
           <StepControls
             key={`${session.id}-${session.cursor}`}
             seconds={step.seconds}
+            targetSeconds={step.item.durationSec}
             rest={step.kind === "rest"}
             reps={step.item.reps}
             timed={step.item.durationSec !== undefined}
@@ -320,6 +324,14 @@ function Session({
             onNext={advance}
           />
           <p className="mt-5 text-sm text-cyan-400">{step.item.notes}</p>
+          {step.kind === "work" &&
+            step.item.durationSec &&
+            step.item.notes?.toLowerCase().includes("each side") && (
+              <p className="text-sm text-cyan-300 mt-2">
+                Timer covers both sides. Switch at halfway; pause for the
+                transition. Record the shorter side’s time below.
+              </p>
+            )}
           {step.item.bandSuggestion && (
             <p className="mt-2 text-sm text-slate-400">
               Use your {step.item.bandSuggestion} band.
@@ -365,6 +377,7 @@ function Session({
 }
 
 function StepControls({
+  targetSeconds,
   seconds,
   rest,
   reps,
@@ -372,6 +385,7 @@ function StepControls({
   maxEffort,
   onNext,
 }: {
+  targetSeconds?: number;
   seconds: number | null;
   rest: boolean;
   reps?: number;
@@ -382,7 +396,7 @@ function StepControls({
   const [remaining, setRemaining] = useState(seconds ?? 0);
   const [deadline, setDeadline] = useState<number | null>(null);
   const [actual, setActual] = useState(
-    String(maxEffort ? "" : (seconds ?? reps ?? "")),
+    String(maxEffort ? "" : (targetSeconds ?? seconds ?? reps ?? "")),
   );
   const running = deadline !== null;
   useEffect(() => {

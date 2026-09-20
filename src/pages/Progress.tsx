@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useProgressContext } from "../context/ProgressContext";
 import { plan, TOTAL_DAYS, TRAIN_DAYS } from "../data/plan";
 import { WorkoutHistory } from "../components/WorkoutHistory";
+import { ProgramReview } from '../components/ProgramReview';
 
 export function ProgressPage() {
   const { progress, completedCount, resetProgress, isCompleted } =
@@ -76,6 +77,7 @@ export function ProgressPage() {
       </section>
 
       <WorkoutHistory />
+      <ProgramReview />
       <button
         type="button"
         onClick={() => {

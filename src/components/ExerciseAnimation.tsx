@@ -1,5 +1,6 @@
 import { createContext, useContext, useId, useState } from 'react';
 import type { AnimationId } from '../data/types';
+import { newExercises } from '../data/newExercises';
 
 /** Public URL for a generated exercise photo (respects Vite/GitHub Pages base). */
 export function exerciseImageUrl(animationId: AnimationId): string {
@@ -172,6 +173,13 @@ export function ExerciseAnimation({
   const [imgFailed, setImgFailed] = useState(false);
   const thumb = variant === 'thumb';
   const imgAlt = alt?.trim() || humanizeAnimationId(animationId);
+  const guide = newExercises[animationId];
+  if (guide) return (
+    <div className={`rounded-xl bg-slate-900 border border-white/10 p-4 flex flex-col justify-center ${className}`}>
+      <p className="text-cyan-300 text-xs font-semibold">{thumb ? guide.muscles[0] : 'TECHNIQUE GUIDE'}</p>
+      {!thumb && <><p className="text-xl font-semibold mt-2">{guide.name}</p><ol className="mt-3 space-y-2 text-sm text-slate-300">{guide.cues.map((cue, i) => <li key={cue}>{i + 1}. {cue}</li>)}</ol><p className="text-xs text-slate-500 mt-4">Written instruction · no video demo available yet</p></>}
+    </div>
+  );
 
   if (imgFailed) {
     return (

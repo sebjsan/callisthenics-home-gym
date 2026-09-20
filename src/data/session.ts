@@ -24,7 +24,7 @@ export function buildSession(day: PlanDay): SessionStep[] {
           set,
           kind: "work",
           seconds:
-            item.durationSec && item.durationSec > 1 ? item.durationSec : null,
+            item.durationSec && item.durationSec > 1 ? item.durationSec * (item.notes?.toLowerCase().includes('each side') ? 2 : 1) : null,
         });
         if (item.restSec > 0)
           steps.push({ item, phase, set, kind: "rest", seconds: item.restSec });

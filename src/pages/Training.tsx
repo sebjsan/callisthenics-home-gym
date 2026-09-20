@@ -63,7 +63,43 @@ export function Training() {
               <option value="foundation">
                 Foundation · easier variations and lower volume
               </option>
-              <option value="standard">Original plan · standard targets</option>
+              <option value="standard">
+                Balanced Foundations · standard targets
+              </option>
+            </select>
+          </label>
+          <label>
+            Push-up variation
+            <select
+              className="form-input"
+              value={draft.pushLevel}
+              onChange={(e) =>
+                setDraft({
+                  ...draft,
+                  pushLevel: e.target.value as "knees" | "full",
+                })
+              }
+            >
+              <option value="knees">Knee push-ups · build control</option>
+              <option value="full">
+                Full push-ups · I can do 6 clean reps
+              </option>
+            </select>
+          </label>
+          <label>
+            Pull-up variation
+            <select
+              className="form-input"
+              value={draft.pullLevel}
+              onChange={(e) =>
+                setDraft({
+                  ...draft,
+                  pullLevel: e.target.value as "assisted" | "full",
+                })
+              }
+            >
+              <option value="assisted">Band-assisted · build control</option>
+              <option value="full">Unassisted · I can do 3 clean reps</option>
             </select>
           </label>
           <label>
@@ -110,9 +146,12 @@ export function Training() {
           </div>
         </fieldset>
         <p className="text-sm text-slate-400">
-          Your focus guides the dashboard. Starting effort and equipment change
-          workout prescriptions. The weekly goal tracks consistency; it does not
-          rearrange your 30-day sequence or replace recovery days.
+          Choose a harder variation only after controlled practice feels
+          comfortable across two sessions. Foundation effort overrides harder
+          choices. Your focus guides the dashboard. Starting effort and
+          equipment change workout prescriptions. The weekly goal tracks
+          consistency; it does not rearrange your 30-day sequence or replace
+          recovery days.
         </p>
         <button className="primary-button" type="submit">
           Save training profile →

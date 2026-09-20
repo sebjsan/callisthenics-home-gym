@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { ProgressState } from "../data/types";
 
-const STORAGE_KEY = "chg-progress-v1";
+const STORAGE_KEY = "chg-progress-balanced-v2";
 
 function todayISO(): string {
   const d = new Date();

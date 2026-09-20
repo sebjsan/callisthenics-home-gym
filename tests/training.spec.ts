@@ -74,7 +74,7 @@ test('partial workout keeps actual values without completing the plan day, and e
   await page.getByRole('radio', { name: 'Hard', exact: true }).check();
   await page.getByRole('button', { name: 'Save partial workout' }).click();
   await expect(page.getByRole('status')).toContainText('Partial workout saved');
-  const state = await page.evaluate(() => ({ training: JSON.parse(localStorage.getItem('chg-training-v1')!), progress: JSON.parse(localStorage.getItem('chg-progress-v1')!) }));
+  const state = await page.evaluate(() => ({ training: JSON.parse(localStorage.getItem('chg-training-v1')!), progress: JSON.parse(localStorage.getItem('chg-progress-balanced-v2')!) }));
   expect(state.progress.completedDays).toEqual([]);
   expect(state.training.history[0].sets).toEqual([{ exerciseId: 'mat-wgs', value: 23, unit: 'seconds' }]);
   expect(state.training.history[0].effort).toBe('hard');

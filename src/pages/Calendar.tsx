@@ -3,21 +3,25 @@ import { Link } from "react-router-dom";
 import { DayTypeBadge } from "../components/DayTypeBadge";
 import { ExerciseAnimation } from "../components/ExerciseAnimation";
 import { useProgressContext } from "../context/ProgressContext";
-import { getHeroAnimationId, getTodayPlanDay, plan } from "../data/plan";
+import {
+  getHeroAnimationId,
+  getTodayPlanDay,
+  plan,
+  chapters,
+} from "../data/plan";
+import { useTraining } from "../context/TrainingContext";
+import { adaptPlan } from "../data/training";
 
-const chapters = [
-  "Foundation",
-  "Build momentum",
-  "Find your strength",
-  "Finish strong",
-];
 export function Calendar() {
+  const { profile } = useTraining();
   const { isCompleted, progress, completedCount } = useProgressContext();
   const today = getTodayPlanDay(progress.completedDays);
   const [week, setWeek] = useState(
     Math.min(3, Math.floor((today.day - 1) / 7)),
   );
-  const days = plan.slice(week * 7, week === 3 ? 30 : (week + 1) * 7);
+  const days = plan
+    .slice(week * 7, week === 3 ? 30 : (week + 1) * 7)
+    .map((day) => adaptPlan(day, profile).day);
   return (
     <div className="space-y-6">
       <div className="page-heading">
@@ -25,7 +29,9 @@ export function Calendar() {
           <p className="eyebrow">YOUR ROAD TO STRONGER</p>
           <h1>The 30-day plan</h1>
           <p className="text-slate-400 mt-3">
-            Build your push, pull, and core foundations. One session at a time.
+            Balanced Foundations: three full-body strength sessions, two easy
+            movement days, and two rest days each week. Week four reduces
+            volume; day 29 repeats your baseline.
           </p>
         </div>
         <span className="streak-pill">{completedCount} / 30 complete</span>

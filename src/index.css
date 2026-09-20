@@ -36,10 +36,10 @@ body {
 /* A quiet training surface with one clear action color. */
 @theme {
   --color-ink: #11151b;
-  --color-cyan-300: #c6d8ee;
-  --color-cyan-400: #9db9dc;
-  --color-cyan-500: #7e9fc8;
-  --color-violet-500: #617fa6;
+  --color-cyan-300: #93c5fd;
+  --color-cyan-400: #60a5fa;
+  --color-cyan-500: #3b82f6;
+  --color-violet-500: #2563eb;
 }
 body {
   background: #11151b;
@@ -54,7 +54,7 @@ button {
   cursor: pointer;
 }
 :focus-visible {
-  outline: 2px solid #9db9dc;
+  outline: 2px solid #60a5fa;
   outline-offset: 5px;
 }
 .page-heading {
@@ -73,7 +73,7 @@ button {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.15em;
-  color: #9db9dc;
+  color: #60a5fa;
   margin-bottom: 12px;
 }
 .streak-pill,
@@ -85,8 +85,8 @@ button {
   white-space: nowrap;
 }
 .streak-pill {
-  background: #9db9dc10;
-  color: #9db9dc;
+  background: #60a5fa10;
+  color: #60a5fa;
 }
 .hero-workout {
   display: grid;
@@ -133,7 +133,7 @@ button {
   justify-content: center;
   gap: 28px;
   padding: 15px 22px;
-  background: #9db9dc;
+  background: #60a5fa;
   color: #101b2b;
   font-size: 14px;
   font-weight: 700;
@@ -142,7 +142,7 @@ button {
   transition: background 0.15s;
 }
 .primary-button:hover {
-  background: #b8cde6;
+  background: #93c5fd;
 }
 .secondary-button {
   display: inline-flex;
@@ -182,7 +182,7 @@ button {
 }
 .section-heading a {
   font-size: 12px;
-  color: #9db9dc;
+  color: #60a5fa;
 }
 .section-heading .eyebrow {
   margin-bottom: 6px;
@@ -214,11 +214,11 @@ button {
   font-size: 9px;
 }
 .week-day.current {
-  border-color: #9db9dc;
-  background: #9db9dc10;
+  border-color: #60a5fa;
+  background: #60a5fa10;
 }
 .week-day.complete {
-  background: #9db9dc;
+  background: #60a5fa;
   color: #172538;
 }
 .week-day.complete strong {
@@ -239,11 +239,11 @@ button {
   background: #ffffff12;
 }
 .plan-progress::-webkit-progress-value {
-  background: #9db9dc;
+  background: #60a5fa;
   border-radius: 99px;
 }
 .plan-progress::-moz-progress-bar {
-  background: #9db9dc;
+  background: #60a5fa;
   border-radius: 99px;
 }
 .foundation-grid {
@@ -259,7 +259,7 @@ button {
   transition: border-color 0.15s;
 }
 .foundation-card:hover {
-  border-color: #9db9dc;
+  border-color: #60a5fa;
 }
 .foundation-card h3 {
   display: flex;
@@ -369,7 +369,7 @@ button {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  accent-color: #9db9dc;
+  accent-color: #60a5fa;
 }
 .skill-step {
   display: flex;
@@ -397,7 +397,7 @@ button {
   border: 1px solid #ffffff30;
 }
 .skill-number.practiced {
-  background: #9db9dc;
+  background: #60a5fa;
   color: #101b2b;
 }
 .favorite-button {
@@ -407,10 +407,10 @@ button {
   padding: 12px 16px;
   text-align: left;
   font-size: 12px;
-  color: #9db9dc;
+  color: #60a5fa;
 }
 .favorite-button:hover {
-  background: #9db9dc10;
+  background: #60a5fa10;
 }
 .effort-options {
   display: grid;
@@ -430,7 +430,7 @@ button {
   font-size: 13px;
 }
 .effort-options input {
-  accent-color: #9db9dc;
+  accent-color: #60a5fa;
 }
 .history-row {
   display: flex;

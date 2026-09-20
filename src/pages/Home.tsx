@@ -78,6 +78,20 @@ export function Home() {
         </div>
       </section>
       <TrainingSummary />
+      <section className="panel space-y-3">
+        <p className="eyebrow">NEW · BALANCED FOUNDATIONS</p>
+        <h2 className="text-xl font-semibold">
+          A complete month of balanced training
+        </h2>
+        <p className="text-sm text-slate-400">
+          Three strength days, two easy days, and two rest days each week.
+          Learn, build reps, add volume, then take a lighter week before
+          repeating your baseline. Progress at your own pace.
+        </p>
+        <Link className="text-cyan-400 text-sm" to="/progress">
+          Your new program record & original archive →
+        </Link>
+      </section>
       <section className="dashboard-grid">
         <div className="panel">
           <div className="section-heading">

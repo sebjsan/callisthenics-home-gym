@@ -1,7 +1,7 @@
-import { Link, useParams } from 'react-router-dom';
-import { EquipmentBadge } from '../components/EquipmentBadge';
-import { ExerciseAnimation } from '../components/ExerciseAnimation';
-import { exercises } from '../data/exercises';
+import { Link, useParams } from "react-router-dom";
+import { EquipmentBadge } from "../components/EquipmentBadge";
+import { ExerciseAnimation } from "../components/ExerciseAnimation";
+import { exercises } from "../data/exercises";
 
 export function ExerciseDetail() {
   const { exerciseId } = useParams();
@@ -32,6 +32,30 @@ export function ExerciseDetail() {
       </div>
 
       <ExerciseAnimation animationId={ex.animationId} alt={ex.name} />
+      {(ex.easierId || ex.harderId || ex.readiness) && (
+        <section className="panel space-y-3">
+          <h2 className="font-semibold">Choose your next step</h2>
+          <p className="text-sm text-slate-400">{ex.readiness}</p>
+          <div className="flex flex-wrap gap-3">
+            {ex.easierId && (
+              <Link
+                className="secondary-button"
+                to={`/exercise/${ex.easierId}`}
+              >
+                Easier: {exercises[ex.easierId]?.name}
+              </Link>
+            )}
+            {ex.harderId && (
+              <Link
+                className="secondary-button"
+                to={`/exercise/${ex.harderId}`}
+              >
+                Next: {exercises[ex.harderId]?.name}
+              </Link>
+            )}
+          </div>
+        </section>
+      )}
 
       <div className="flex flex-wrap gap-1.5">
         {ex.equipment.map((eq) => (
@@ -40,7 +64,9 @@ export function ExerciseDetail() {
       </div>
 
       <section className="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
-        <h2 className="text-sm font-semibold text-slate-200">Primary muscles</h2>
+        <h2 className="text-sm font-semibold text-slate-200">
+          Primary muscles
+        </h2>
         <div className="mt-2 flex flex-wrap gap-2">
           {ex.muscles.length === 0 ? (
             <p className="text-xs text-slate-500">No primary muscles listed.</p>

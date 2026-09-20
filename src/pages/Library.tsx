@@ -19,6 +19,8 @@ export function Library() {
       (!mine || canTrain(ex.id, profile.equipment)) &&
       (!starred || favorites.includes(ex.id)) &&
       (equipment === "all" ||
+        (equipment === "none" &&
+          ex.equipment.every((eq) => eq === "yoga-mat")) ||
         ex.equipment.some((eq) => eq.startsWith(equipment))),
   );
   return (
@@ -51,6 +53,7 @@ export function Library() {
             onChange={(e) => setEquipment(e.target.value)}
           >
             <option value="all">All equipment</option>
+            <option value="none">No equipment · floor space only</option>
             <option value="yoga-mat">Mat</option>
             <option value="push-up-bars">Push-up bars</option>
             <option value="pull-up-bar">Pull-up / dip station</option>

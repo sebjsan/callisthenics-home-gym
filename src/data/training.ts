@@ -10,24 +10,30 @@ export const gear: Equipment[] = [
 ];
 export type Goal = "strength" | "consistency" | "skills";
 export interface TrainingProfile {
+  pushLevel: "knees" | "full";
+  pullLevel: "assisted" | "full";
   goal: Goal;
   level: "foundation" | "standard";
   weeklyTarget: number;
   equipment: Equipment[];
 }
 export const defaultProfile: TrainingProfile = {
+  pushLevel: "knees",
+  pullLevel: "assisted",
   goal: "strength",
   level: "standard",
   weeklyTarget: 3,
   equipment: [...gear],
 };
 export interface SetLog {
+  perSide?: boolean;
   exerciseId: string;
   value: number;
   unit: "reps" | "seconds";
   band?: "light" | "medium" | "heavy";
 }
 export interface WorkoutLog {
+  programId?: string;
   id: string;
   day: number;
   date: string;
@@ -48,6 +54,12 @@ export const initialTraining: TrainingState = {
   history: [],
 };
 export const skillPaths = [
+  {
+    title: "Leg strength & balance",
+    description:
+      "Build comfortable squats, then practice unilateral control. Use the easier option whenever balance limits your set.",
+    ids: ["bodyweight-squat", "reverse-lunge", "split-squat"],
+  },
   {
     title: "Your first pull-up",
     description:
@@ -98,6 +110,31 @@ export function canTrain(
 }
 
 const easier: Record<string, WorkoutExercise> = {
+  "floor-push-up": {
+    exerciseId: "floor-knee-push-up",
+    sets: 2,
+    reps: 6,
+    restSec: 60,
+  },
+  "reverse-lunge": {
+    exerciseId: "bodyweight-squat",
+    sets: 2,
+    reps: 8,
+    restSec: 60,
+  },
+  "split-squat": {
+    exerciseId: "bodyweight-squat",
+    sets: 2,
+    reps: 8,
+    restSec: 60,
+  },
+  "mat-side-plank": {
+    exerciseId: "knee-side-plank",
+    sets: 2,
+    durationSec: 15,
+    restSec: 40,
+    notes: "Each side",
+  },
   "bar-push-up": {
     exerciseId: "bar-knee-push-up",
     sets: 2,
@@ -175,6 +212,32 @@ export function adaptPlan(
   function adapt(items: WorkoutExercise[], main: boolean) {
     return items.flatMap((original) => {
       let item = { ...original };
+      if (main && source.type === "train" && !ease) {
+        if (
+          profile.pushLevel === "full" &&
+          ["bar-knee-push-up", "floor-knee-push-up"].includes(item.exerciseId)
+        ) {
+          item.exerciseId =
+            item.exerciseId === "bar-knee-push-up"
+              ? "bar-push-up"
+              : "floor-push-up";
+          item.reps = Math.min(item.reps ?? 6, 6);
+          changes.push(
+            "Your selected full push-up variation replaces knee push-ups, with a lower starting rep target.",
+          );
+        }
+        if (
+          profile.pullLevel === "full" &&
+          item.exerciseId === "band-assisted-pull-up"
+        ) {
+          item.exerciseId = "pull-up";
+          item.reps = 3;
+          delete item.bandSuggestion;
+          changes.push(
+            "Your selected unassisted pull-up variation: 3 controlled reps per set.",
+          );
+        }
+      }
       if (main && ease) {
         if (easier[item.exerciseId]) {
           item = { ...easier[item.exerciseId] };
@@ -197,6 +260,61 @@ export function adaptPlan(
         }
       }
       if (main && short) item.sets = 1;
+      if (!canTrain(item.exerciseId, profile.equipment, item.bandSuggestion)) {
+        const substitutes: Record<string, string> = {
+          "bar-knee-push-up": "floor-knee-push-up",
+          "bar-push-up": "floor-push-up",
+          "bar-diamond-push-up": "floor-push-up",
+          "bar-incline-push-up": "floor-knee-push-up",
+          "band-squat": "bodyweight-squat",
+          "band-good-morning": "bodyweight-hinge",
+        };
+        const replacement = substitutes[item.exerciseId];
+        if (replacement) {
+          changes.push(
+            `${exercises[item.exerciseId]!.name} → ${exercises[replacement]!.name} (available equipment)`,
+          );
+          item = {
+            ...item,
+            exerciseId: replacement,
+            bandSuggestion: undefined,
+          };
+        } else if (
+          item.exerciseId === "band-assisted-pull-up" &&
+          canTrain("band-row", profile.equipment)
+        ) {
+          const band = profile.equipment.includes("resistance-band-medium")
+            ? "medium"
+            : "heavy";
+          item = {
+            exerciseId: "band-row",
+            sets: item.sets,
+            reps: 10,
+            restSec: 75,
+            bandSuggestion: band,
+          };
+          changes.push(
+            "Assisted pull-up → band row. This trains horizontal pulling, not the pull-up skill.",
+          );
+        } else if (
+          item.bandSuggestion &&
+          item.exerciseId !== "band-assisted-pull-up" &&
+          canTrain(item.exerciseId, profile.equipment)
+        ) {
+          const band = exercises[item.exerciseId]!.equipment.find(
+            (eq) =>
+              eq.startsWith("resistance-band") &&
+              profile.equipment.includes(eq),
+          )!;
+          item.bandSuggestion = band.replace(
+            "resistance-band-",
+            "",
+          ) as WorkoutExercise["bandSuggestion"];
+          changes.push(
+            `${exercises[item.exerciseId]!.name}: use your ${item.bandSuggestion} band; adjust reps to keep 2–3 in reserve.`,
+          );
+        }
+      }
       if (!canTrain(item.exerciseId, profile.equipment, item.bandSuggestion)) {
         unavailable.push(exercises[item.exerciseId]!.name);
         return [];
@@ -222,7 +340,9 @@ export function adaptPlan(
       (total, item) =>
         total +
         item.sets *
-          ((item.durationSec ?? (item.reps ?? 1) * 4) + item.restSec) +
+          ((item.durationSec ?? (item.reps ?? 1) * 4) *
+            (item.notes?.toLowerCase().includes("each side") ? 2 : 1) +
+            item.restSec) +
         20,
       0,
     ) / 60,
@@ -231,7 +351,7 @@ export function adaptPlan(
     day,
     changes: [...new Set(changes)],
     unavailable: [...new Set(unavailable)],
-    shortened: short || ease || unavailable.length > 0,
+    shortened: short || ease || unavailable.length > 0 || changes.length > 0,
   };
 }
 
@@ -270,6 +390,8 @@ export function readTraining(raw: string | null): TrainingState {
     const p = value.profile ?? {};
     return {
       profile: {
+        pushLevel: p.pushLevel === "full" ? "full" : "knees",
+        pullLevel: p.pullLevel === "full" ? "full" : "assisted",
         goal: ["strength", "consistency", "skills"].includes(p.goal)
           ? p.goal
           : "strength",

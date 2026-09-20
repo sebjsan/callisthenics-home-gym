@@ -6,7 +6,7 @@ export function WorkoutHistory() {
   const sets = history.flatMap((log) => log.sets);
   const records = new Map<string, { value: number; unit: string }>();
   for (const set of sets) {
-    const key = `${set.exerciseId}:${set.unit}:${set.band ?? ""}`;
+    const key = `${set.exerciseId}:${set.unit}:${set.band ?? ""}:${set.perSide ? "per side" : ""}`;
     if (!records.has(key) || records.get(key)!.value < set.value)
       records.set(key, { value: set.value, unit: set.unit });
   }
@@ -74,7 +74,7 @@ export function WorkoutHistory() {
                       {key.split(":")[2] ? ` (${key.split(":")[2]} band)` : ""}
                     </span>
                     <strong className="text-cyan-400 whitespace-nowrap">
-                      {record.value} {record.unit}
+                      {record.value} {record.unit} {key.split(":")[3]}
                     </strong>
                   </div>
                 );
@@ -94,7 +94,10 @@ export function WorkoutHistory() {
                     </span>
                     <span className="block text-xs text-slate-400 mt-2">
                       {new Date(log.date).toLocaleDateString()} ·{" "}
-                      {log.sets.length} sets ·{" "}
+                      {log.programId
+                        ? "Balanced Foundations"
+                        : "Original program"}{" "}
+                      · {log.sets.length} sets ·{" "}
                       {log.effort === "right"
                         ? "Just right"
                         : log.effort === "hard"
@@ -115,6 +118,7 @@ export function WorkoutHistory() {
                         </span>
                         <span className="text-slate-400 whitespace-nowrap">
                           {set.value} {set.unit}
+                          {set.perSide ? " per side" : ""}
                         </span>
                       </li>
                     ))}
