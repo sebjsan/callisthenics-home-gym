@@ -175,7 +175,7 @@ export function ExerciseAnimation({
   const thumb = variant === 'thumb';
   const imgAlt = alt?.trim() || humanizeAnimationId(animationId);
   const guide = newExercises[animationId];
-  if (guide) return (
+  if (guide && failedImage === animationId) return (
     <MovementIllustration id={animationId} name={guide.name} thumb={thumb} className={className} />
   );
 
@@ -203,13 +203,13 @@ export function ExerciseAnimation({
         onError={() => setFailedImage(animationId)}
         className={
           thumb
-            ? 'absolute inset-0 h-full w-full object-cover brightness-110 contrast-105'
-            : 'relative mx-auto block h-64 w-full object-cover brightness-105 contrast-105 sm:h-72'
+            ? `absolute inset-0 h-full w-full ${guide ? 'object-contain' : 'object-cover'} brightness-110 contrast-105`
+            : `relative mx-auto block h-64 w-full ${guide ? 'object-contain' : 'object-cover'} brightness-105 contrast-105 sm:h-72`
         }
       />
       {!thumb && (
         <p className="pb-2 pt-1 text-center text-[10px] uppercase tracking-widest text-slate-500">
-          Form demo
+          Exercise illustration
         </p>
       )}
     </div>

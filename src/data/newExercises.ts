@@ -1,6 +1,6 @@
 import type { Exercise } from "./types";
 
-// New movements pair schematic illustrations with written technique cues.
+// New movements pair generated human exercise images with written technique cues.
 export const newExercises: Record<string, Exercise> = {
   "floor-knee-push-up": {
     id: "floor-knee-push-up",

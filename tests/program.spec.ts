@@ -70,7 +70,7 @@ test('new movement guide, no-equipment filter, and selected variations work', as
   await page.getByRole('combobox', { name: 'Equipment', exact: true }).selectOption('none');
   await page.getByRole('searchbox').fill('reverse lunge');
   await page.getByRole('link', { name: /Reverse Lunge/ }).click();
-  await expect(page.getByText('Movement illustration · follow the technique cues below')).toBeVisible();
+  await expect(page.getByText('Exercise illustration', { exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'Easier: Bodyweight Squat' }).click();
   await expect(page.getByRole('heading', { name: 'Bodyweight Squat', exact: true })).toBeVisible();
   await page.goto('./training');
@@ -98,19 +98,20 @@ test('per-side hold timer and recorded target use consistent units', async ({ pa
   await expect(page.getByText(/Timer covers both sides/)).toBeVisible();
 });
 
-test('all new exercises have visible illustrations in cards and detail pages', async ({ page }) => {
+test('all new exercises load human images in cards and detail pages', async ({ page }) => {
   await page.goto('./library');
   for (const exercise of Object.values(newExercises)) {
-    const preview = page.getByRole('img', { name: new RegExp(`^${exercise.name}:`) });
+    const preview = page.getByRole('img', { name: exercise.name, exact: true });
     await preview.scrollIntoViewIfNeeded();
     await expect(preview).toBeVisible();
+    await expect.poll(() => preview.evaluate(el => el instanceof HTMLImageElement && el.complete && el.naturalWidth > 0)).toBe(true);
     const bounds = await preview.boundingBox();
     expect(bounds!.width).toBeGreaterThan(50);
     expect(bounds!.height).toBeGreaterThan(50);
   }
   for (const exercise of Object.values(newExercises)) {
     await page.goto(`./exercise/${exercise.id}`);
-    await expect(page.getByRole('img', { name: new RegExp(`^${exercise.name}:`) })).toBeVisible();
+    await expect(page.getByRole('img', { name: exercise.name, exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Coaching cues' })).toBeVisible();
   }
 });
