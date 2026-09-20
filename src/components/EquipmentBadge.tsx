@@ -1,6 +1,7 @@
 import type { Equipment } from '../data/types';
 
 const LABELS: Record<Equipment, string> = {
+  'rings': 'Gymnastic rings',
   'yoga-mat': 'Yoga mat',
   'push-up-bars': 'Push-up bars',
   'resistance-band-light': 'Light band',
@@ -10,6 +11,7 @@ const LABELS: Record<Equipment, string> = {
 };
 
 const COLORS: Record<Equipment, string> = {
+  'rings': 'bg-blue-500/15 text-blue-300 ring-blue-500/30',
   'yoga-mat': 'bg-cyan-500/15 text-cyan-300 ring-cyan-500/30',
   'push-up-bars': 'bg-violet-500/15 text-violet-300 ring-violet-500/30',
   'resistance-band-light': 'bg-amber-500/15 text-amber-200 ring-amber-500/30',

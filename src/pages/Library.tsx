@@ -53,6 +53,7 @@ export function Library() {
             onChange={(e) => setEquipment(e.target.value)}
           >
             <option value="all">All equipment</option>
+            <option value="rings">Gymnastic rings</option>
             <option value="none">No equipment · floor space only</option>
             <option value="yoga-mat">Mat</option>
             <option value="push-up-bars">Push-up bars</option>

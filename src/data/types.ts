@@ -1,4 +1,5 @@
 export type Equipment =
+  | "rings"
   | "yoga-mat"
   | "push-up-bars"
   | "resistance-band-light"
@@ -9,6 +10,8 @@ export type Equipment =
 export type DayType = "train" | "active-recovery" | "rest";
 
 export type AnimationId =
+  | "ring-row"
+  | "ring-incline-push-up"
   | "floor-push-up"
   | "floor-knee-push-up"
   | "bodyweight-squat"

@@ -145,6 +145,13 @@ export function Training() {
             ))}
           </div>
         </fieldset>
+        {draft.equipment.includes("rings") && (
+          <div className="rounded-xl bg-blue-500/10 border border-blue-400/30 p-4 text-sm space-y-2">
+            <h2 className="font-semibold text-blue-300">Rings alongside your current routine</h2>
+            <p>Ring rows replace band rows on A/C days. Incline ring push-ups replace floor push-ups on B days. Your station work, legs, core, and recovery days stay included.</p>
+            <p>Start with feet on the floor and a nearly upright body. Use a support suitable for ring training; selecting rings here does not verify your wall mounting.</p>
+          </div>
+        )}
         <p className="text-sm text-slate-400">
           Choose a harder variation only after controlled practice feels
           comfortable across two sessions. Foundation effort overrides harder

@@ -2,6 +2,7 @@ import { exercises } from "./exercises";
 import type { Equipment, PlanDay, WorkoutExercise } from "./types";
 
 export const gear: Equipment[] = [
+  "rings",
   "push-up-bars",
   "pull-up-bar",
   "resistance-band-light",
@@ -23,7 +24,7 @@ export const defaultProfile: TrainingProfile = {
   goal: "strength",
   level: "standard",
   weeklyTarget: 3,
-  equipment: [...gear],
+  equipment: gear.filter((eq) => eq !== "rings"),
 };
 export interface SetLog {
   perSide?: boolean;
@@ -54,6 +55,7 @@ export const initialTraining: TrainingState = {
   history: [],
 };
 export const skillPaths = [
+  { title: "Ring foundations", description: "Practice rows and incline presses with feet on the floor. Start upright; increase the lean only after two comfortable sessions. These are complementary movements, not a difficulty ladder.", ids: ["ring-row", "ring-incline-push-up"] },
   {
     title: "Leg strength & balance",
     description:
@@ -238,6 +240,17 @@ export function adaptPlan(
           );
         }
       }
+      if (main && source.type === "train" && profile.equipment.includes("rings")) {
+        const ringId = item.exerciseId === "band-row"
+          ? "ring-row"
+          : ["floor-knee-push-up", "floor-push-up"].includes(item.exerciseId)
+            ? "ring-incline-push-up" : undefined;
+        if (ringId) {
+          changes.push(`${exercises[item.exerciseId]!.name} → ${exercises[ringId]!.name} (rings selected)`);
+          item = { exerciseId: ringId, sets: item.sets, reps: source.phase === "Build repeatable reps" ? 8 : 6, restSec: 75,
+            notes: "Feet stay on the floor. Start nearly upright; keep 2–3 clean reps in reserve. Adjust body angle before adding reps." };
+        }
+      }
       if (main && ease) {
         if (easier[item.exerciseId]) {
           item = { ...easier[item.exerciseId] };
@@ -401,7 +414,7 @@ export function readTraining(raw: string | null): TrainingState {
           : 3,
         equipment: Array.isArray(p.equipment)
           ? gear.filter((eq) => p.equipment.includes(eq))
-          : [...gear],
+          : [...defaultProfile.equipment],
       },
       favorites: Array.isArray(value.favorites)
         ? [
