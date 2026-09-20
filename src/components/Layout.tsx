@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useProgressContext } from "../context/ProgressContext";
+import { useTraining } from "../context/TrainingContext";
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
   `flex flex-col items-center gap-0.5 px-3 py-2 text-xs font-medium transition-colors ${
@@ -10,6 +11,7 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 export function Layout() {
   const { pathname } = useLocation();
   const { storageError } = useProgressContext();
+  const { error: trainingError } = useTraining();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -46,7 +48,7 @@ export function Layout() {
       </header>
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-7 pb-[calc(7rem+env(safe-area-inset-bottom))]">
-        {storageError && (
+        {(storageError || trainingError) && (
           <p role="alert" className="panel mb-4 text-amber-300">
             Device storage is unavailable. Your progress will last only for this
             visit.

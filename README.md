@@ -82,6 +82,12 @@ Personal / private use for the repo owner.
 
 ## Guided training experience
 
+- `/training`: saved equipment, foundation/standard effort, focus, and weekly attendance target; pull-up, push-up, and core learning paths.
+- Day previews support shorter or easier sessions and explicitly list substitutions and unavailable exercises. The weekly target does not reschedule the underlying plan.
+- Record actual reps/seconds, optional voice prompts, post-session effort, partial workouts, favorites, history, and best sets grouped by band assistance. Export up to 200 locally saved sessions as JSON.
+- Existing completed days are preserved. Unsaved cursors from the old player are not migrated; new sessions save both cursor and recorded sets.
+- See [product research and implementation limits](docs/product-research.md) for the comparison of Calistree, Freeletics, THENX, and BetterMe.
+
 - Responsive men's training dashboard with the next unfinished day, week overview, and actual plan completion.
 - Four plan chapters, including days 29 and 30 in the final chapter.
 - `/library`: searchable exercise names and muscles, combined with equipment filters.

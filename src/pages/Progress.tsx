@@ -1,22 +1,34 @@
-import { Link } from 'react-router-dom';
-import { useProgressContext } from '../context/ProgressContext';
-import { plan, TOTAL_DAYS, TRAIN_DAYS } from '../data/plan';
+import { Link } from "react-router-dom";
+import { useProgressContext } from "../context/ProgressContext";
+import { plan, TOTAL_DAYS, TRAIN_DAYS } from "../data/plan";
+import { WorkoutHistory } from "../components/WorkoutHistory";
 
 export function ProgressPage() {
-  const { progress, completedCount, resetProgress, isCompleted } = useProgressContext();
-  const trainDone = plan.filter((d) => d.type === 'train' && isCompleted(d.day)).length;
+  const { progress, completedCount, resetProgress, isCompleted } =
+    useProgressContext();
+  const trainDone = plan.filter(
+    (d) => d.type === "train" && isCompleted(d.day),
+  ).length;
   const pct = Math.round((completedCount / TOTAL_DAYS) * 100);
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-xl font-bold text-white">Progress</h1>
-        <p className="mt-1 text-sm text-slate-400">Stored locally on this device.</p>
+        <p className="mt-1 text-sm text-slate-400">
+          Stored locally on this device.
+        </p>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <Card label="Current streak" value={`${progress.streak} day${progress.streak === 1 ? '' : 's'}`} />
-        <Card label="Days completed" value={`${completedCount} / ${TOTAL_DAYS}`} />
+        <Card
+          label="Current streak"
+          value={`${progress.streak} day${progress.streak === 1 ? "" : "s"}`}
+        />
+        <Card
+          label="Days completed"
+          value={`${completedCount} / ${TOTAL_DAYS}`}
+        />
         <Card label="Train days done" value={`${trainDone} / ${TRAIN_DAYS}`} />
         <Card label="Plan complete" value={`${pct}%`} />
       </div>
@@ -43,7 +55,7 @@ export function ProgressPage() {
         <h2 className="text-sm font-semibold text-slate-200">Completed days</h2>
         {progress.completedDays.length === 0 ? (
           <p className="mt-2 text-sm text-slate-500">
-            No days marked yet.{' '}
+            No days marked yet.{" "}
             <Link to="/" className="text-cyan-400">
               Start today&apos;s workout
             </Link>
@@ -63,14 +75,20 @@ export function ProgressPage() {
         )}
       </section>
 
+      <WorkoutHistory />
       <button
         type="button"
         onClick={() => {
-          if (confirm('Reset all progress on this device?')) resetProgress();
+          if (
+            confirm(
+              "Reset plan completion on this device? Saved workout history stays unchanged.",
+            )
+          )
+            resetProgress();
         }}
         className="w-full rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-300 hover:bg-rose-500/20"
       >
-        Reset progress
+        Reset plan completion
       </button>
     </div>
   );

@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { TrainingSummary } from "../components/TrainingSummary";
+import { useTraining } from "../context/TrainingContext";
+import { adaptPlan } from "../data/training";
 import { ExerciseAnimation } from "../components/ExerciseAnimation";
 import { useProgressContext } from "../context/ProgressContext";
 import {
@@ -10,7 +13,8 @@ import {
 
 export function Home() {
   const { progress, completedCount, isCompleted } = useProgressContext();
-  const today = getTodayPlanDay(progress.completedDays);
+  const { profile } = useTraining();
+  const today = adaptPlan(getTodayPlanDay(progress.completedDays), profile).day;
   const week = Math.min(4, Math.ceil(today.day / 7));
   const allDone = completedCount === TOTAL_DAYS;
   const weekDays = plan.slice((week - 1) * 7, week === 4 ? 30 : week * 7);
@@ -44,7 +48,7 @@ export function Home() {
             <span className="detail-chip">
               {today.type === "rest"
                 ? "Recovery day"
-                : `${today.estimatedMinutes} min`}
+                : `~${today.estimatedMinutes} min`}
             </span>
             <span className="detail-chip">
               {today.main.length} main exercises
@@ -73,6 +77,7 @@ export function Home() {
           <span className="hero-caption">CONTROL. CONSISTENCY. STRENGTH.</span>
         </div>
       </section>
+      <TrainingSummary />
       <section className="dashboard-grid">
         <div className="panel">
           <div className="section-heading">

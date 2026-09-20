@@ -69,7 +69,7 @@ test("timer pauses, resumes, and session preserves position after reload", async
   await expect(page.locator(".timer-display")).toContainText("0:45");
 });
 
-test("full session saves once and existing completions survive replay", async ({
+test("full session saves once and retry does not duplicate history", async ({
   page,
 }) => {
   await page.goto("./workout/1");
@@ -85,6 +85,7 @@ test("full session saves once and existing completions survive replay", async ({
     page.getByRole("heading", { name: "That’s a strong finish." }),
   ).toBeVisible();
   await page.reload();
+  const pending = await page.evaluate(() => Object.entries(sessionStorage).find(([key]) => key.startsWith('chg-session-v2-'))!);
   await page.getByRole("button", { name: "Save workout" }).click();
   await expect(page.getByRole("status")).toContainText("Workout saved");
   expect(
@@ -92,18 +93,15 @@ test("full session saves once and existing completions survive replay", async ({
       () => JSON.parse(localStorage.getItem("chg-progress-v1")!).completedDays,
     ),
   ).toEqual([1]);
-  await page.evaluate(
-    (last) => sessionStorage.setItem("chg-session-v1-1", String(last)),
-    steps.length - 1,
-  );
+  await page.evaluate(([key, value]) => sessionStorage.setItem(key!, value!), pending);
   await page.reload();
-  await page.getByRole("button", { name: "Complete set" }).click();
   await page.getByRole("button", { name: "Save workout" }).click();
   expect(
     await page.evaluate(
       () => JSON.parse(localStorage.getItem("chg-progress-v1")!).completedDays,
     ),
   ).toEqual([1]);
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('chg-training-v1')!).history.length)).toBe(1);
 });
 
 test("blocked storage stays usable and explains the limitation", async ({

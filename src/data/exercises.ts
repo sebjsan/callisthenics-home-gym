@@ -284,7 +284,7 @@ export const exercises: Record<string, Exercise> = {
   'band-assisted-pull-up': {
     id: 'band-assisted-pull-up',
     name: 'Band-Assisted Pull-Up',
-    equipment: ['pull-up-bar', 'resistance-band-heavy', 'resistance-band-medium'],
+    equipment: ['pull-up-bar', 'resistance-band-heavy', 'resistance-band-medium', 'resistance-band-light'],
     animationId: 'band-assisted-pull-up',
     muscles: ['lats', 'biceps', 'core'],
     description: 'Primary pull-up progression — loop a band over the BDL bar for assistance under feet or knees.',
