@@ -5,7 +5,7 @@ import { MovementIllustration } from './MovementIllustration';
 
 /** Public URL for a generated exercise photo (respects Vite/GitHub Pages base). */
 export function exerciseImageUrl(animationId: AnimationId): string {
-  return `${import.meta.env.BASE_URL}exercises/${animationId}.png`;
+  return `${import.meta.env.BASE_URL}exercises/${animationId === 'dead-bug' ? 'dead-bug-v2' : animationId}.png`;
 }
 
 export type ExerciseAnimationVariant = 'full' | 'thumb';
@@ -203,13 +203,13 @@ export function ExerciseAnimation({
         onError={() => setFailedImage(animationId)}
         className={
           thumb
-            ? `absolute inset-0 h-full w-full ${guide ? 'object-contain' : 'object-cover'} brightness-110 contrast-105`
-            : `relative mx-auto block h-64 w-full ${guide ? 'object-contain' : 'object-cover'} brightness-105 contrast-105 sm:h-72`
+            ? `absolute inset-0 h-full w-full ${guide || animationId === 'dead-bug' ? 'object-contain' : 'object-cover'} brightness-110 contrast-105`
+            : `relative mx-auto block h-64 w-full ${guide || animationId === 'dead-bug' ? 'object-contain' : 'object-cover'} brightness-105 contrast-105 sm:h-72`
         }
       />
       {!thumb && (
         <p className="pb-2 pt-1 text-center text-[10px] uppercase tracking-widest text-slate-500">
-          Exercise illustration
+          {animationId === 'dead-bug' ? 'Starting position · alternate opposite arm and leg from here' : 'Exercise illustration'}
         </p>
       )}
     </div>
