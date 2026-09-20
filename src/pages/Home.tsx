@@ -1,158 +1,215 @@
-import { Link } from 'react-router-dom';
-import { DayTypeBadge } from '../components/DayTypeBadge';
-import { ExerciseAnimation } from '../components/ExerciseAnimation';
-import { useProgressContext } from '../context/ProgressContext';
-import { getHeroAnimationId, getTodayPlanDay, TOTAL_DAYS, TRAIN_DAYS } from '../data/plan';
+import { Link } from "react-router-dom";
+import { TrainingSummary } from "../components/TrainingSummary";
+import { useTraining } from "../context/TrainingContext";
+import { adaptPlan } from "../data/training";
+import { ExerciseAnimation } from "../components/ExerciseAnimation";
+import { useProgressContext } from "../context/ProgressContext";
+import {
+  getHeroAnimationId,
+  getTodayPlanDay,
+  TOTAL_DAYS,
+  plan,
+} from "../data/plan";
 
 export function Home() {
   const { progress, completedCount, isCompleted } = useProgressContext();
-  const today = getTodayPlanDay(progress.completedDays);
-  const done = isCompleted(today.day);
-  const pct = Math.round((completedCount / TOTAL_DAYS) * 100);
-
+  const { profile } = useTraining();
+  const today = adaptPlan(getTodayPlanDay(progress.completedDays), profile).day;
+  const week = Math.min(4, Math.ceil(today.day / 7));
+  const allDone = completedCount === TOTAL_DAYS;
+  const weekDays = plan.slice((week - 1) * 7, week === 4 ? 30 : week * 7);
   return (
-    <div className="space-y-6">
-      <section className="overflow-hidden rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-violet-500/5 to-transparent">
-        <div className="flex gap-3 p-4 sm:p-5">
-          <div
-            className={`relative h-28 w-24 shrink-0 overflow-hidden rounded-2xl sm:h-32 sm:w-28 ${
-              today.type === 'rest' ? 'opacity-75' : ''
-            }`}
-          >
-            <ExerciseAnimation
-              animationId={getHeroAnimationId(today)}
-              alt={today.title}
-              variant="thumb"
-              className="h-full w-full rounded-2xl"
-            />
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-medium uppercase tracking-widest text-cyan-400/80">
-              Today&apos;s focus
-            </p>
-            <h1 className="mt-1 text-xl font-bold tracking-tight text-white sm:text-2xl">
-              Day {today.day}: {today.title}
-            </h1>
-            <div className="mt-2 flex flex-wrap items-center gap-2">
-              <DayTypeBadge type={today.type} />
-              {today.estimatedMinutes > 0 && (
-                <span className="text-xs text-slate-400">~{today.estimatedMinutes} min</span>
-              )}
-              {done && (
-                <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-emerald-300">
-                  Completed
-                </span>
-              )}
-            </div>
-            <p className="mt-2 line-clamp-3 text-sm text-slate-300">{today.focus}</p>
-          </div>
+    <div className="space-y-7">
+      <div className="page-heading">
+        <div>
+          <p className="eyebrow">MEN’S CALISTHENICS · YOUR DAILY PLAN</p>
+          <h1>
+            Build strength.
+            <br />
+            <span className="text-slate-400">One day at a time.</span>
+          </h1>
         </div>
-        <div className="px-4 pb-4 sm:px-5 sm:pb-5">
+        <span className="streak-pill">↗ {progress.streak} day streak</span>
+      </div>
+      <section className="hero-workout">
+        <div className="hero-copy">
+          <p className="eyebrow">
+            {allDone
+              ? "30 DAYS. WELL EARNED."
+              : `WEEK ${week} · DAY ${today.day} OF 30`}
+          </p>
+          <h2>{allDone ? "You showed up. You got stronger." : today.title}</h2>
+          <p className="text-slate-300">
+            {allDone
+              ? "Your plan is complete. Revisit your favorite sessions or explore your progress."
+              : today.focus}
+          </p>
+          <div className="flex flex-wrap gap-2 my-5">
+            <span className="detail-chip">
+              {today.type === "rest"
+                ? "Recovery day"
+                : `~${today.estimatedMinutes} min`}
+            </span>
+            <span className="detail-chip">
+              {today.main.length} main exercises
+            </span>
+            <span className="detail-chip">Home training</span>
+          </div>
           <Link
-            to={`/day/${today.day}`}
-            className="inline-flex w-full items-center justify-center rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-ink shadow-lg shadow-cyan-500/25 transition hover:bg-cyan-400"
+            className="primary-button"
+            to={allDone ? "/progress" : `/day/${today.day}`}
           >
-            {today.type === 'rest' ? 'View rest day' : done ? 'Review workout' : 'Start workout'}
+            {allDone
+              ? "See your progress"
+              : today.type === "rest"
+                ? "Your recovery plan"
+                : "Let’s train"}{" "}
+            <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+        <div className="hero-visual">
+          <ExerciseAnimation
+            animationId={getHeroAnimationId(today)}
+            alt={today.title}
+            variant="thumb"
+            className="h-full w-full"
+          />
+          <span className="hero-caption">CONTROL. CONSISTENCY. STRENGTH.</span>
+        </div>
+      </section>
+      <TrainingSummary />
+      <section className="panel space-y-3">
+        <p className="eyebrow">NEW · BALANCED FOUNDATIONS</p>
+        <h2 className="text-xl font-semibold">
+          A complete month of balanced training
+        </h2>
+        <p className="text-sm text-slate-400">
+          Three strength days, two easy days, and two rest days each week.
+          Learn, build reps, add volume, then take a lighter week before
+          repeating your baseline. Progress at your own pace.
+        </p>
+        <Link className="text-cyan-400 text-sm" to="/progress">
+          Your new program record & original archive →
+        </Link>
+      </section>
+      <section className="dashboard-grid">
+        <div className="panel">
+          <div className="section-heading">
+            <h2>Your week</h2>
+            <Link to="/calendar">View plan ↗</Link>
+          </div>
+          <div className="week-strip">
+            {weekDays.map((d) => (
+              <Link
+                key={d.day}
+                to={`/day/${d.day}`}
+                className={`week-day ${d.day === today.day ? "current" : ""} ${isCompleted(d.day) ? "complete" : ""}`}
+                aria-label={`Day ${d.day}, ${d.title}${isCompleted(d.day) ? ", complete" : ""}`}
+              >
+                <span>DAY</span>
+                <strong>{isCompleted(d.day) ? "✓" : d.day}</strong>
+                <small>
+                  {d.type === "rest"
+                    ? "Rest"
+                    : d.type === "active-recovery"
+                      ? "Easy"
+                      : "Train"}
+                </small>
+              </Link>
+            ))}
+          </div>
+          <p className="mt-4 text-sm text-slate-400">
+            A little progress, repeated. Recovery counts too.
+          </p>
+        </div>
+        <div className="panel">
+          <div className="section-heading">
+            <h2>The bigger picture</h2>
+            <span className="text-cyan-400">
+              {Math.round((completedCount / TOTAL_DAYS) * 100)}%
+            </span>
+          </div>
+          <p className="text-4xl font-bold tracking-tight">
+            {completedCount}
+            <span className="text-lg text-slate-400 font-normal">
+              {" "}
+              / 30 days
+            </span>
+          </p>
+          <progress
+            className="plan-progress"
+            value={completedCount}
+            max={TOTAL_DAYS}
+            aria-label="Plan completion"
+          />
+          <Link className="text-sm text-slate-400" to="/progress">
+            See your consistency build →
           </Link>
         </div>
       </section>
-
-      <section className="grid grid-cols-3 gap-3">
-        <Stat label="Streak" value={`${progress.streak}d`} />
-        <Stat label="Done" value={`${completedCount}/${TOTAL_DAYS}`} />
-        <Stat label="Train days" value={`${TRAIN_DAYS}`} />
-      </section>
-
-      <section className="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
-        <div className="mb-2 flex items-center justify-between text-xs text-slate-400">
-          <span>Plan progress</span>
-          <span>{pct}%</span>
-        </div>
-        <div className="h-2 overflow-hidden rounded-full bg-slate-800">
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 transition-all"
-            style={{ width: `${pct}%` }}
-          />
-        </div>
-      </section>
-
-      <section className="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
-        <h2 className="text-sm font-semibold text-slate-200">Your kit</h2>
-
-        <a
-          href="https://a.co/d/0ar2Fena"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-3 block overflow-hidden rounded-xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-slate-900/40 to-transparent transition hover:border-cyan-400/40"
-        >
-          <div className="flex gap-3 p-3">
-            <img
-              src={`${import.meta.env.BASE_URL}kit/bdl-station.png`}
-              alt="BDL wall-mounted pull-up and dip station on hooks"
-              className="h-24 w-20 shrink-0 rounded-lg object-cover ring-1 ring-white/10 sm:h-28 sm:w-24"
-              loading="lazy"
-              decoding="async"
-            />
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-white">BDL wall pull-up + dip station</p>
-              <p className="mt-0.5 text-[10px] uppercase tracking-wider text-cyan-400/80">
-                Featured hardware · Amazon
-              </p>
-              <p className="mt-2 text-xs leading-relaxed text-slate-400">
-                One black-steel piece that hangs on wall hooks only — flip and remount at different
-                hook heights for pull-ups vs dips / leg raises. Orange-and-black spiral grips, arm
-                pads, back cushion, multi-grip bar, dip handles, and accessory rings. No floor posts
-                or rack rails.
-              </p>
-            </div>
+      <section>
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">TRAIN WITH INTENTION</p>
+            <h2>Master the foundations</h2>
           </div>
-          <img
-            src={`${import.meta.env.BASE_URL}kit/bdl-flip-modes.png`}
-            alt="Flip between pull-up bar and dip station orientations on wall hooks"
-            className="w-full border-t border-white/5 object-cover object-top"
-            loading="lazy"
-            decoding="async"
-          />
-          <ul className="space-y-1 border-t border-white/5 px-3 py-2.5 text-xs text-slate-400">
-            <li className="flex gap-2"><Bullet /> Flip + remount on higher hooks for multi-grip pull-ups</li>
-            <li className="flex gap-2"><Bullet /> Flip to lower hooks for dip handles + supported leg raises</li>
-            <li className="flex gap-2"><Bullet /> Band / ring anchors · rated ~440 lb</li>
-          </ul>
-        </a>
-
-        <ul className="mt-3 space-y-2 text-sm text-slate-400">
-          <li className="flex gap-2"><Bullet /> Yoga mat</li>
-          <li className="flex gap-2"><Bullet /> Floor push-up bars</li>
-          <li className="flex gap-2"><Bullet /> Resistance bands (light / medium / heavy)</li>
-        </ul>
+          <Link to="/library">All exercises ↗</Link>
+        </div>
+        <div className="foundation-grid">
+          {[
+            {
+              id: "bar-push-up",
+              title: "Own your push-up",
+              sub: "Chest · shoulders · triceps",
+              animation: "push-up" as const,
+            },
+            {
+              id: "band-assisted-pull-up",
+              title: "Build your first pull-up",
+              sub: "Back · arms · grip",
+              animation: "band-assisted-pull-up" as const,
+            },
+            {
+              id: "mat-hollow",
+              title: "Find your core strength",
+              sub: "Core · body control",
+              animation: "hollow-hold" as const,
+            },
+          ].map((e) => (
+            <Link
+              className="foundation-card"
+              key={e.id}
+              to={`/exercise/${e.id}`}
+            >
+              <ExerciseAnimation
+                animationId={e.animation}
+                alt={e.title}
+                variant="thumb"
+                className="foundation-image"
+              />
+              <div className="p-4">
+                <h3>
+                  {e.title} <span aria-hidden="true">↗</span>
+                </h3>
+                <p className="text-xs text-slate-400 mt-1">{e.sub}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
-
-      <section className="rounded-2xl border border-white/5 bg-white/[0.03] p-4 text-sm text-slate-400">
-        <h2 className="text-sm font-semibold text-slate-200">How this plan works</h2>
-        <p className="mt-2 leading-relaxed">
-          Beginner → intermediate progression over 30 days with ~5–6 training days per week.
-          Sessions run about 30–45 minutes and build toward unassisted pull-ups using negatives,
-          scapular work, and band assistance — balanced with push-up bar pressing, BDL station dips,
-          and mat mobility. Core progresses from hollow holds to hanging knee/supported raises and
-          Pallof anti-rotation work so every train day has a clear core finisher.
-        </p>
-        <Link to="/calendar" className="mt-3 inline-block text-sm font-medium text-cyan-400 hover:text-cyan-300">
-          Open 30-day calendar →
-        </Link>
+      <section className="panel flex gap-4 items-start">
+        <span className="text-cyan-400 text-2xl" aria-hidden="true">
+          ◎
+        </span>
+        <div>
+          <h2 className="font-semibold">Built for your home setup</h2>
+          <p className="text-sm text-slate-400 mt-1">
+            Your 30-day plan uses a mat, push-up bars, resistance bands, and
+            your wall-mounted pull-up / dip station. Progress at your own pace
+            and repeat days when you need to.
+          </p>
+        </div>
       </section>
     </div>
   );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-3 text-center">
-      <p className="text-lg font-bold text-white">{value}</p>
-      <p className="text-[10px] uppercase tracking-wider text-slate-500">{label}</p>
-    </div>
-  );
-}
-
-function Bullet() {
-  return <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />;
 }

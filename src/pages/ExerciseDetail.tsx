@@ -1,10 +1,14 @@
-import { Link, useParams } from 'react-router-dom';
-import { EquipmentBadge } from '../components/EquipmentBadge';
-import { ExerciseAnimation } from '../components/ExerciseAnimation';
-import { exercises } from '../data/exercises';
+import { ExerciseHistory } from "../components/ExerciseHistory";
+import { skillPaths, canTrain } from "../data/training";
+import { useTraining } from "../context/TrainingContext";
+import { Link, useParams } from "react-router-dom";
+import { EquipmentBadge } from "../components/EquipmentBadge";
+import { ExerciseAnimation } from "../components/ExerciseAnimation";
+import { exercises } from "../data/exercises";
 
 export function ExerciseDetail() {
   const { exerciseId } = useParams();
+  const { profile } = useTraining();
   const ex = exerciseId ? exercises[exerciseId] : undefined;
 
   if (!ex) {
@@ -21,18 +25,49 @@ export function ExerciseDetail() {
   return (
     <div className="space-y-5">
       <div>
-        <button
-          type="button"
-          onClick={() => history.back()}
+        <Link
+          to="/library"
           className="text-xs font-medium text-cyan-400 hover:text-cyan-300"
         >
-          ← Back
-        </button>
+          ← Exercise library
+        </Link>
         <h1 className="mt-2 text-xl font-bold text-white">{ex.name}</h1>
         <p className="mt-1 text-sm text-slate-400">{ex.description}</p>
       </div>
 
       <ExerciseAnimation animationId={ex.animationId} alt={ex.name} />
+      <ExerciseHistory exerciseId={ex.id} />
+      {skillPaths.filter(path => path.ids.includes(ex.id)).map(path => <section className="panel space-y-3" key={path.title}>
+        <h2 className="font-semibold text-blue-300">{path.title}</h2>
+        <p className="text-sm text-slate-400">{path.description}</p>
+        <div className="flex flex-wrap gap-2">{path.ids.map(id => <Link key={id} className="secondary-button" aria-current={id === ex.id ? "page" : undefined} to={`/exercise/${id}`}>
+          {id === ex.id ? "Current: " : ""}{exercises[id]!.name}{!canTrain(id, profile.equipment) ? " · Equipment needed" : ""}
+        </Link>)}</div>
+      </section>)}
+      {(ex.easierId || ex.harderId || ex.readiness) && (
+        <section className="panel space-y-3">
+          <h2 className="font-semibold">Choose your next step</h2>
+          <p className="text-sm text-slate-400">{ex.readiness}</p>
+          <div className="flex flex-wrap gap-3">
+            {ex.easierId && (
+              <Link
+                className="secondary-button"
+                to={`/exercise/${ex.easierId}`}
+              >
+                Easier: {exercises[ex.easierId]?.name}
+              </Link>
+            )}
+            {ex.harderId && (
+              <Link
+                className="secondary-button"
+                to={`/exercise/${ex.harderId}`}
+              >
+                Next: {exercises[ex.harderId]?.name}
+              </Link>
+            )}
+          </div>
+        </section>
+      )}
 
       <div className="flex flex-wrap gap-1.5">
         {ex.equipment.map((eq) => (
@@ -41,7 +76,9 @@ export function ExerciseDetail() {
       </div>
 
       <section className="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
-        <h2 className="text-sm font-semibold text-slate-200">Primary muscles</h2>
+        <h2 className="text-sm font-semibold text-slate-200">
+          Primary muscles
+        </h2>
         <div className="mt-2 flex flex-wrap gap-2">
           {ex.muscles.length === 0 ? (
             <p className="text-xs text-slate-500">No primary muscles listed.</p>

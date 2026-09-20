@@ -1,6 +1,12 @@
+import { expandedExercises } from './expandedExercises';
 import type { Exercise } from './types';
+import { ringExercises } from './ringExercises';
+import { newExercises } from './newExercises';
 
 export const exercises: Record<string, Exercise> = {
+  ...newExercises,
+  ...ringExercises,
+  ...expandedExercises,
   'mat-cat-cow': {
     id: 'mat-cat-cow',
     name: 'Cat-Cow',
@@ -100,6 +106,7 @@ export const exercises: Record<string, Exercise> = {
     ],
   },
   'mat-side-plank': {
+    easierId: 'knee-side-plank', readiness: 'Choose bent knees if you cannot keep your hips stacked or breathe normally.',
     id: 'mat-side-plank',
     name: 'Side Plank',
     equipment: ['yoga-mat'],
@@ -142,6 +149,7 @@ export const exercises: Record<string, Exercise> = {
     ],
   },
   'bar-knee-push-up': {
+    harderId: 'bar-push-up', readiness: 'Practice 2 sets of 10 clean reps across two comfortable sessions before trying full push-ups. Keep 2–3 reps in reserve.',
     id: 'bar-knee-push-up',
     name: 'Knee Push-Up (Bars)',
     equipment: ['push-up-bars', 'yoga-mat'],
@@ -156,6 +164,7 @@ export const exercises: Record<string, Exercise> = {
     ],
   },
   'bar-push-up': {
+    easierId: 'bar-knee-push-up', harderId: 'bar-diamond-push-up', readiness: 'Choose a harder variation only when you can repeat your current sets with steady form.',
     id: 'bar-push-up',
     name: 'Push-Up (Bars)',
     equipment: ['push-up-bars'],
@@ -284,7 +293,7 @@ export const exercises: Record<string, Exercise> = {
   'band-assisted-pull-up': {
     id: 'band-assisted-pull-up',
     name: 'Band-Assisted Pull-Up',
-    equipment: ['pull-up-bar', 'resistance-band-heavy', 'resistance-band-medium'],
+    equipment: ['pull-up-bar', 'resistance-band-heavy', 'resistance-band-medium', 'resistance-band-light'],
     animationId: 'band-assisted-pull-up',
     muscles: ['lats', 'biceps', 'core'],
     description: 'Primary pull-up progression — loop a band over the BDL bar for assistance under feet or knees.',
