@@ -15,7 +15,7 @@ Balanced Foundations replaces the previous high-frequency plan with three full-b
 
 These exact sessions and targets are our implementation decisions, not a claim about any competitor's paid plan or a clinically personalized prescription. Calendar progression does not force harder exercise variations. Users select full push-ups or unassisted pull-ups only when comfortable; foundation mode overrides those choices. Session notes explain repeating earlier work and keeping clean reps in reserve.
 
-Ten additional exercises have original descriptions and cues. New movements show written technique cards rather than inaccurate reused videos or images. Existing visuals remain. Lower-body work, floor pressing alternatives, equipment-free filters, progression links, and a leg skill path expand the original library.
+Ten additional exercises have original descriptions and cues. New movements show original two-position schematic illustrations alongside written technique cues. Existing visuals remain. Lower-body work, floor pressing alternatives, equipment-free filters, progression links, and a leg skill path expand the original library.
 
 Equipment changes use explicit substitutions. Rows can replace unavailable assisted pull-ups as horizontal strength work, with that difference disclosed. When there is no usable pulling equipment, pulling is omitted visibly; shoulder mobility is not claimed to replace loaded pulling. The preview warns that the original workout focus may be incomplete.
 

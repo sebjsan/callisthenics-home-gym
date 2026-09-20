@@ -70,7 +70,7 @@ test('new movement guide, no-equipment filter, and selected variations work', as
   await page.getByRole('combobox', { name: 'Equipment', exact: true }).selectOption('none');
   await page.getByRole('searchbox').fill('reverse lunge');
   await page.getByRole('link', { name: /Reverse Lunge/ }).click();
-  await expect(page.getByText('Written instruction · no video demo available yet')).toBeVisible();
+  await expect(page.getByText('Movement illustration · follow the technique cues below')).toBeVisible();
   await page.getByRole('link', { name: 'Easier: Bodyweight Squat' }).click();
   await expect(page.getByRole('heading', { name: 'Bodyweight Squat', exact: true })).toBeVisible();
   await page.goto('./training');
@@ -96,4 +96,21 @@ test('per-side hold timer and recorded target use consistent units', async ({ pa
   await expect(page.locator('.timer-display')).toContainText('0:40');
   await expect(page.getByRole('spinbutton', { name: 'Seconds completed' })).toHaveValue('20');
   await expect(page.getByText(/Timer covers both sides/)).toBeVisible();
+});
+
+test('all new exercises have visible illustrations in cards and detail pages', async ({ page }) => {
+  await page.goto('./library');
+  for (const exercise of Object.values(newExercises)) {
+    const preview = page.getByRole('img', { name: new RegExp(`^${exercise.name}:`) });
+    await preview.scrollIntoViewIfNeeded();
+    await expect(preview).toBeVisible();
+    const bounds = await preview.boundingBox();
+    expect(bounds!.width).toBeGreaterThan(50);
+    expect(bounds!.height).toBeGreaterThan(50);
+  }
+  for (const exercise of Object.values(newExercises)) {
+    await page.goto(`./exercise/${exercise.id}`);
+    await expect(page.getByRole('img', { name: new RegExp(`^${exercise.name}:`) })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Coaching cues' })).toBeVisible();
+  }
 });

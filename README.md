@@ -10,7 +10,7 @@ Harder push-ups and unassisted pull-ups require an explicit profile choice. Date
 
 ## Exercises and guidance
 
-Ten new movements expand equipment-free pressing, squats, lunges, split squats, calves, hinges, shoulder control, easy marching, and side-plank regressions. They include original written technique cards; videos are not supplied for these additions. Existing exercise photos and SVG fallbacks remain. Progression links and readiness guidance connect related movements.
+Ten new movements expand equipment-free pressing, squats, lunges, split squats, calves, hinges, shoulder control, easy marching, and side-plank regressions. They include two-position blue movement illustrations and written technique cues; videos are not supplied for these additions. Existing exercise photos and SVG fallbacks remain. Progression links and readiness guidance connect related movements.
 
 The supported gear is a mat, floor push-up bars, light/medium/heavy bands, and a securely mounted BDL pull-up/dip station. Equipment-aware substitutions preserve practical alternatives where possible. When no pulling equipment is available, pulling work is explicitly omitted; floor shoulder drills are not presented as equivalent to loaded pulling.
 

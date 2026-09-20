@@ -1,6 +1,7 @@
 import { createContext, useContext, useId, useState } from 'react';
 import type { AnimationId } from '../data/types';
 import { newExercises } from '../data/newExercises';
+import { MovementIllustration } from './MovementIllustration';
 
 /** Public URL for a generated exercise photo (respects Vite/GitHub Pages base). */
 export function exerciseImageUrl(animationId: AnimationId): string {
@@ -170,18 +171,15 @@ export function ExerciseAnimation({
   alt,
   variant = 'full',
 }: Props) {
-  const [imgFailed, setImgFailed] = useState(false);
+  const [failedImage, setFailedImage] = useState<AnimationId | null>(null);
   const thumb = variant === 'thumb';
   const imgAlt = alt?.trim() || humanizeAnimationId(animationId);
   const guide = newExercises[animationId];
   if (guide) return (
-    <div className={`rounded-xl bg-slate-900 border border-white/10 p-4 flex flex-col justify-center ${className}`}>
-      <p className="text-cyan-300 text-xs font-semibold">{thumb ? guide.muscles[0] : 'TECHNIQUE GUIDE'}</p>
-      {!thumb && <><p className="text-xl font-semibold mt-2">{guide.name}</p><ol className="mt-3 space-y-2 text-sm text-slate-300">{guide.cues.map((cue, i) => <li key={cue}>{i + 1}. {cue}</li>)}</ol><p className="text-xs text-slate-500 mt-4">Written instruction · no video demo available yet</p></>}
-    </div>
+    <MovementIllustration id={animationId} name={guide.name} thumb={thumb} className={className} />
   );
 
-  if (imgFailed) {
+  if (failedImage === animationId) {
     return (
       <SvgExerciseFallback
         animationId={animationId}
@@ -202,7 +200,7 @@ export function ExerciseAnimation({
         alt={imgAlt}
         loading="lazy"
         decoding="async"
-        onError={() => setImgFailed(true)}
+        onError={() => setFailedImage(animationId)}
         className={
           thumb
             ? 'absolute inset-0 h-full w-full object-cover brightness-110 contrast-105'

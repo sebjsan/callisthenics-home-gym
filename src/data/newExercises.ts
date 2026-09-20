@@ -1,6 +1,6 @@
 import type { Exercise } from "./types";
 
-// New movements use written technique cards until a verified visual is available.
+// New movements pair schematic illustrations with written technique cues.
 export const newExercises: Record<string, Exercise> = {
   "floor-knee-push-up": {
     id: "floor-knee-push-up",
