@@ -1,3 +1,4 @@
+import { ExerciseHistory } from "../components/ExerciseHistory";
 import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { getDay, PROGRAM_ID } from "../data/plan";
@@ -60,7 +61,7 @@ export function Workout() {
   const adapted = original
     ? adaptPlan(
         original,
-        profile,
+        options.get("travel") === "1" ? { ...profile, equipment: [] } : profile,
         options.get("short") === "1",
         options.get("gentle") === "1",
       )
@@ -114,6 +115,7 @@ function Session({
   );
   const [saved, setSaved] = useState(false);
   const [effort, setEffort] = useState<WorkoutLog["effort"]>("right");
+  const [technique, setTechnique] = useState<WorkoutLog["technique"]>();
   const [voice, setVoice] = useState(false);
   const { completeDay, storageError } = useProgressContext();
   const { saveWorkout, error } = useTraining();
@@ -178,7 +180,7 @@ function Session({
                   : "Workout saved. Your plan is up to date."}
             </p>
             <p className="text-sm text-slate-400 mb-5">
-              {effort === "hard"
+              {effort === "hard" || technique === "needs-practice"
                 ? "Next time, use Easier today or repeat this session. Keep recovery days."
                 : effort === "easy"
                   ? "If every rep stayed controlled, repeat that quality before exploring the next skill step."
@@ -216,6 +218,14 @@ function Session({
                 ))}
               </div>
             </fieldset>
+            <label className="block text-sm my-4">
+              How was your technique?
+              <select className="form-input" value={technique ?? ""} onChange={e => setTechnique(e.target.value === "" ? undefined : e.target.value as WorkoutLog["technique"])}>
+                <option value="">Not assessed</option>
+                <option value="controlled">Controlled throughout</option>
+                <option value="needs-practice">Needs more practice</option>
+              </select>
+            </label>
             {session.skipped > 0 && (
               <p className="text-sm text-amber-200 mb-4">
                 Skipped sets make this a partial session. Saving it will not
@@ -233,6 +243,7 @@ function Session({
                     title: day.title,
                     date: new Date().toISOString(),
                     effort,
+                    technique,
                     sets: session.sets,
                     shortened,
                     skipped: session.skipped,
@@ -349,6 +360,7 @@ function Session({
           </details>
         </div>
       </div>
+      {step.kind === "work" && <ExerciseHistory exerciseId={exercise.id} />}
       <div className="panel mt-5">
         <p className="eyebrow">UP NEXT</p>
         <p className="mt-2">

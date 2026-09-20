@@ -103,6 +103,7 @@ export function WorkoutHistory() {
                         : log.effort === "hard"
                           ? "Hard"
                           : "Easy"}
+                      {log.technique === "controlled" ? " · Form: controlled" : log.technique === "needs-practice" ? " · Form: needs practice" : ""}
                       {log.shortened ? " · Adapted" : ""}
                       {log.skipped > 0
                         ? ` · Partial (${log.skipped} skipped)`

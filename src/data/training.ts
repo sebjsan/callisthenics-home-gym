@@ -34,6 +34,7 @@ export interface SetLog {
   band?: "light" | "medium" | "heavy";
 }
 export interface WorkoutLog {
+  technique?: "controlled" | "needs-practice";
   programId?: string;
   id: string;
   day: number;
@@ -380,6 +381,7 @@ export function validLog(value: unknown): value is WorkoutLog {
     typeof v.date === "string" &&
     Number.isFinite(Date.parse(v.date)) &&
     ["easy", "right", "hard"].includes(v.effort) &&
+    (v.technique === undefined || ["controlled", "needs-practice"].includes(v.technique)) &&
     typeof v.shortened === "boolean" &&
     Number.isInteger(v.skipped) &&
     v.skipped >= 0 &&

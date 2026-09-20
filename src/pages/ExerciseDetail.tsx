@@ -1,3 +1,6 @@
+import { ExerciseHistory } from "../components/ExerciseHistory";
+import { skillPaths, canTrain } from "../data/training";
+import { useTraining } from "../context/TrainingContext";
 import { Link, useParams } from "react-router-dom";
 import { EquipmentBadge } from "../components/EquipmentBadge";
 import { ExerciseAnimation } from "../components/ExerciseAnimation";
@@ -5,6 +8,7 @@ import { exercises } from "../data/exercises";
 
 export function ExerciseDetail() {
   const { exerciseId } = useParams();
+  const { profile } = useTraining();
   const ex = exerciseId ? exercises[exerciseId] : undefined;
 
   if (!ex) {
@@ -32,6 +36,14 @@ export function ExerciseDetail() {
       </div>
 
       <ExerciseAnimation animationId={ex.animationId} alt={ex.name} />
+      <ExerciseHistory exerciseId={ex.id} />
+      {skillPaths.filter(path => path.ids.includes(ex.id)).map(path => <section className="panel space-y-3" key={path.title}>
+        <h2 className="font-semibold text-blue-300">{path.title}</h2>
+        <p className="text-sm text-slate-400">{path.description}</p>
+        <div className="flex flex-wrap gap-2">{path.ids.map(id => <Link key={id} className="secondary-button" aria-current={id === ex.id ? "page" : undefined} to={`/exercise/${id}`}>
+          {id === ex.id ? "Current: " : ""}{exercises[id]!.name}{!canTrain(id, profile.equipment) ? " · Equipment needed" : ""}
+        </Link>)}</div>
+      </section>)}
       {(ex.easierId || ex.harderId || ex.readiness) && (
         <section className="panel space-y-3">
           <h2 className="font-semibold">Choose your next step</h2>

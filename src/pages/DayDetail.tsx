@@ -1,3 +1,4 @@
+import { sessionAdvice } from "../data/coaching";
 import type { ReactNode } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { DayTypeBadge } from "../components/DayTypeBadge";
@@ -11,12 +12,13 @@ export function DayDetail() {
   const { dayId } = useParams();
   const dayNum = Number(dayId);
   const original = getDay(dayNum);
-  const { profile } = useTraining();
+  const { profile, history } = useTraining();
+  const advice = sessionAdvice(history);
   const [options, setOptions] = useSearchParams();
   const adapted = original
     ? adaptPlan(
         original,
-        profile,
+        options.get("travel") === "1" ? { ...profile, equipment: [] } : profile,
         options.get("short") === "1",
         options.get("gentle") === "1",
       )
@@ -73,7 +75,15 @@ export function DayDetail() {
               <h3>Make today work</h3>
               <Link to="/training">Equipment & effort ↗</Link>
             </div>
+            {day.type === "train" && <div className="text-sm space-y-3">
+              <p className="text-blue-300">{advice.text}</p>
+              {advice.ease && <button type="button" disabled={options.get("gentle") === "1"} className="secondary-button disabled:opacity-50" onClick={() => { const next = new URLSearchParams(options); next.set("gentle", "1"); setOptions(next, { replace: true }); }}>{options.get("gentle") === "1" ? "Easier session applied" : "Use suggested easier session"}</button>}
+            </div>}
             <div className="grid sm:grid-cols-2 gap-3">
+              <label className="choice-row">
+                <input type="checkbox" checked={options.get("travel") === "1"} onChange={e => { const next = new URLSearchParams(options); if(e.target.checked) next.set("travel", "1"); else next.delete("travel"); setOptions(next, { replace: true }); }} />
+                No equipment today
+              </label>
               <label className="choice-row">
                 <input
                   type="checkbox"

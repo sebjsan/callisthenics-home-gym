@@ -72,12 +72,14 @@ test('partial workout keeps actual values without completing the plan day, and e
   await page.getByRole('button', { name: 'Complete set' }).click();
   for (const step of steps.slice(1)) await page.getByRole('button', { name: step.kind === 'rest' ? 'Skip rest' : 'Skip set', exact: step.kind !== 'rest' }).click();
   await page.getByRole('radio', { name: 'Hard', exact: true }).check();
+  await page.getByRole('combobox', { name: 'How was your technique?' }).selectOption('needs-practice');
   await page.getByRole('button', { name: 'Save partial workout' }).click();
   await expect(page.getByRole('status')).toContainText('Partial workout saved');
   const state = await page.evaluate(() => ({ training: JSON.parse(localStorage.getItem('chg-training-v1')!), progress: JSON.parse(localStorage.getItem('chg-progress-balanced-v2')!) }));
   expect(state.progress.completedDays).toEqual([]);
   expect(state.training.history[0].sets).toEqual([{ exerciseId: 'mat-wgs', value: 23, unit: 'seconds' }]);
   expect(state.training.history[0].effort).toBe('hard');
+  expect(state.training.history[0].technique).toBe('needs-practice');
   await page.getByRole('link', { name: 'View training history' }).click();
   await expect(page.getByText('23 seconds', { exact: true }).first()).toBeVisible();
   const download = page.waitForEvent('download');
