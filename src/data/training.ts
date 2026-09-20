@@ -12,7 +12,7 @@ export const gear: Equipment[] = [
 export type Goal = "strength" | "consistency" | "skills";
 export interface TrainingProfile {
   pushLevel: "knees" | "full";
-  pullLevel: "assisted" | "full";
+  pullLevel: "assisted" | "full" | "neutral" | "chin" | "tempo" | "hold" | "ring-assisted";
   goal: Goal;
   level: "foundation" | "standard";
   weeklyTarget: number;
@@ -56,7 +56,9 @@ export const initialTraining: TrainingState = {
   history: [],
 };
 export const skillPaths = [
-  { title: "Ring foundations", description: "Practice rows and incline presses with feet on the floor. Start upright; increase the lean only after two comfortable sessions. These are complementary movements, not a difficulty ladder.", ids: ["ring-row", "ring-incline-push-up"] },
+  { title: "Ring pushing & support", description: "Build incline control before low ring push-ups. Feet-assisted support is a separate stability drill; keep feet grounded.", ids: ["ring-incline-push-up", "ring-push-up", "ring-assisted-support"] },
+  { title: "Pull-up variations", description: "Choose a grip you control. Holds and slow-lowering reps require unassisted strength; they are optional alternatives, not extra sets.", ids: ["band-assisted-pull-up", "pull-neutral", "pull-chin-up", "pull-up", "pull-top-hold"] },
+  { title: "Ring foundations", description: "Explore assisted squats, rows, vertical pulls, and curls with feet on the floor. These are complementary movements, not a difficulty ladder.", ids: ["ring-assisted-squat", "ring-row", "ring-assisted-pull-up", "ring-curl"] },
   {
     title: "Leg strength & balance",
     description:
@@ -229,17 +231,6 @@ export function adaptPlan(
             "Your selected full push-up variation replaces knee push-ups, with a lower starting rep target.",
           );
         }
-        if (
-          profile.pullLevel === "full" &&
-          item.exerciseId === "band-assisted-pull-up"
-        ) {
-          item.exerciseId = "pull-up";
-          item.reps = 3;
-          delete item.bandSuggestion;
-          changes.push(
-            "Your selected unassisted pull-up variation: 3 controlled reps per set.",
-          );
-        }
       }
       if (main && source.type === "train" && profile.equipment.includes("rings")) {
         const ringId = item.exerciseId === "band-row"
@@ -251,6 +242,21 @@ export function adaptPlan(
           item = { exerciseId: ringId, sets: item.sets, reps: source.phase === "Build repeatable reps" ? 8 : 6, restSec: 75,
             notes: "Feet stay on the floor. Start nearly upright; keep 2–3 clean reps in reserve. Adjust body angle before adding reps." };
         }
+      }
+      if (main && source.type === "train" && item.exerciseId === "band-assisted-pull-up" && (!ease || profile.pullLevel === "ring-assisted")) {
+        const choices: Partial<Record<TrainingProfile["pullLevel"], WorkoutExercise>> = {
+          full: { exerciseId: "pull-up", sets: item.sets, reps: 3, restSec: 90 },
+          neutral: { exerciseId: "pull-neutral", sets: item.sets, reps: 3, restSec: 90 },
+          chin: { exerciseId: "pull-chin-up", sets: item.sets, reps: 3, restSec: 90 },
+          tempo: { exerciseId: "pull-up", sets: item.sets, reps: 2, restSec: 90, notes: "Lower for 3 seconds each rep." },
+          hold: { exerciseId: "pull-top-hold", sets: item.sets, durationSec: 5, restSec: 90, notes: "Reach the top with a controlled pull-up; lower slowly after the hold." },
+          "ring-assisted": { exerciseId: "ring-assisted-pull-up", sets: item.sets, reps: 5, restSec: 90, notes: "Feet stay planted; use enough leg assistance to keep every rep controlled." },
+        };
+        const choice = choices[profile.pullLevel];
+        if (choice && canTrain(choice.exerciseId, profile.equipment)) {
+          item = { ...choice };
+          changes.push(`Selected pulling variation: ${exercises[item.exerciseId]!.name}.`);
+        } else if (choice) changes.push("Selected pulling variation needs unavailable equipment; using the available assisted option.");
       }
       if (main && ease) {
         if (easier[item.exerciseId]) {
@@ -406,7 +412,7 @@ export function readTraining(raw: string | null): TrainingState {
     return {
       profile: {
         pushLevel: p.pushLevel === "full" ? "full" : "knees",
-        pullLevel: p.pullLevel === "full" ? "full" : "assisted",
+        pullLevel: ["assisted", "full", "neutral", "chin", "tempo", "hold", "ring-assisted"].includes(p.pullLevel) ? p.pullLevel : "assisted",
         goal: ["strength", "consistency", "skills"].includes(p.goal)
           ? p.goal
           : "strength",

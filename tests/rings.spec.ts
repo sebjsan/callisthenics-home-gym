@@ -28,7 +28,7 @@ test('ring selection persists and updates library, preview and guided workout', 
   await expect(page.getByRole('checkbox', { name: 'Gymnastic rings', exact: true })).toBeChecked();
   await page.goto('./library');
   await page.getByRole('combobox', { name: 'Equipment', exact: true }).selectOption('rings');
-  await expect(page.locator('article')).toHaveCount(2);
+  await expect(page.locator('article')).toHaveCount(7);
   for (const img of await page.locator('article img').all()) {
     await expect(img).toBeVisible();
     await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);

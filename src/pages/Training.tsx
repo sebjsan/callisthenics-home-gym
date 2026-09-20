@@ -94,12 +94,17 @@ export function Training() {
               onChange={(e) =>
                 setDraft({
                   ...draft,
-                  pullLevel: e.target.value as "assisted" | "full",
+                  pullLevel: e.target.value as typeof draft.pullLevel,
                 })
               }
             >
               <option value="assisted">Band-assisted · build control</option>
               <option value="full">Unassisted · I can do 3 clean reps</option>
+              <option value="neutral">Neutral grip · 3 controlled reps</option>
+              <option value="chin">Chin-up · 3 controlled reps</option>
+              <option value="tempo">Slow lowering · 2 strict reps</option>
+              <option value="hold">Top hold · 5 seconds after a strict pull-up</option>
+              <option value="ring-assisted">Feet-assisted rings · 5 controlled reps</option>
             </select>
           </label>
           <label>

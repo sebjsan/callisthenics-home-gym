@@ -78,7 +78,7 @@ test('new movement guide, no-equipment filter, and selected variations work', as
   await page.getByRole('combobox', { name: 'Pull-up variation' }).selectOption('full');
   await page.getByRole('button', { name: 'Save training profile' }).click();
   await page.goto('./day/3');
-  await expect(page.getByText(/Your selected unassisted pull-up variation/)).toBeVisible();
+  await expect(page.getByText(/Selected pulling variation: Pull-Up/)).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect(errors).toEqual([]);
 });

@@ -1,3 +1,4 @@
+import { expandedExercises } from './expandedExercises';
 import type { Exercise } from './types';
 import { ringExercises } from './ringExercises';
 import { newExercises } from './newExercises';
@@ -5,6 +6,7 @@ import { newExercises } from './newExercises';
 export const exercises: Record<string, Exercise> = {
   ...newExercises,
   ...ringExercises,
+  ...expandedExercises,
   'mat-cat-cow': {
     id: 'mat-cat-cow',
     name: 'Cat-Cow',

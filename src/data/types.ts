@@ -10,6 +10,14 @@ export type Equipment =
 export type DayType = "train" | "active-recovery" | "rest";
 
 export type AnimationId =
+  | "ring-assisted-squat"
+  | "ring-curl"
+  | "ring-assisted-pull-up"
+  | "ring-push-up"
+  | "ring-assisted-support"
+  | "pull-neutral"
+  | "pull-top-hold"
+
   | "ring-row"
   | "ring-incline-push-up"
   | "floor-push-up"

@@ -203,8 +203,8 @@ export function ExerciseAnimation({
         onError={() => setFailedImage(animationId)}
         className={
           thumb
-            ? `absolute inset-0 h-full w-full ${guide || animationId === 'dead-bug' || animationId.startsWith('ring-') ? 'object-contain' : 'object-cover'} brightness-110 contrast-105`
-            : `relative mx-auto block h-64 w-full ${guide || animationId === 'dead-bug' || animationId.startsWith('ring-') ? 'object-contain' : 'object-cover'} brightness-105 contrast-105 sm:h-72`
+            ? `absolute inset-0 h-full w-full ${guide || animationId === 'dead-bug' || animationId.startsWith('ring-') || ['pull-neutral', 'pull-top-hold'].includes(animationId) ? 'object-contain' : 'object-cover'} brightness-110 contrast-105`
+            : `relative mx-auto block h-64 w-full ${guide || animationId === 'dead-bug' || animationId.startsWith('ring-') || ['pull-neutral', 'pull-top-hold'].includes(animationId) ? 'object-contain' : 'object-cover'} brightness-105 contrast-105 sm:h-72`
         }
       />
       {!thumb && (
