@@ -1,143 +1,95 @@
-import { Link } from 'react-router-dom';
-import { DayTypeBadge } from '../components/DayTypeBadge';
-import { ExerciseAnimation } from '../components/ExerciseAnimation';
-import { useProgressContext } from '../context/ProgressContext';
-import { getExercise } from '../data/exercises';
-import { getHeroAnimationId, plan } from '../data/plan';
-import type { PlanDay } from '../data/types';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { DayTypeBadge } from "../components/DayTypeBadge";
+import { ExerciseAnimation } from "../components/ExerciseAnimation";
+import { useProgressContext } from "../context/ProgressContext";
+import { getHeroAnimationId, getTodayPlanDay, plan } from "../data/plan";
 
-function heroLabel(day: PlanDay): string {
-  if (day.type === 'rest') return 'Rest & recover';
-  const hero = day.main[0] ?? day.warmup[0];
-  if (!hero) return day.focus;
-  return getExercise(hero.exerciseId).name;
-}
-
+const chapters = [
+  "Foundation",
+  "Build momentum",
+  "Find your strength",
+  "Finish strong",
+];
 export function Calendar() {
-  const { isCompleted } = useProgressContext();
-
-  return (
-    <div className="space-y-5">
-      <div>
-        <h1 className="text-xl font-bold text-white">30-day plan</h1>
-        <p className="mt-1 text-sm text-slate-400">
-          Each day shows the male form demo for that session&apos;s hero exercise. Tap for full workout.
-        </p>
-      </div>
-
-      {/* Mobile-first rich grid: 2 cols → 3 → 4 */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-        {plan.map((d) => {
-          const done = isCompleted(d.day);
-          const animId = getHeroAnimationId(d);
-          const rest = d.type === 'rest';
-          const base =
-            d.type === 'rest'
-              ? 'border-slate-700/80 bg-slate-900/60'
-              : d.type === 'active-recovery'
-                ? 'border-amber-500/25 bg-amber-500/5'
-                : 'border-cyan-500/25 bg-cyan-500/5';
-          return (
-            <Link
-              key={d.day}
-              to={`/day/${d.day}`}
-              title={d.title}
-              className={`group relative overflow-hidden rounded-2xl border transition hover:scale-[1.02] hover:border-cyan-400/40 ${base} ${
-                done ? 'ring-2 ring-emerald-400/70' : ''
-              }`}
-            >
-              <div className={`relative aspect-[3/4] w-full overflow-hidden ${rest ? 'opacity-70' : ''}`}>
-                <ExerciseAnimation
-                  animationId={animId}
-                  alt={`${d.title} — ${heroLabel(d)}`}
-                  variant="thumb"
-                  className="absolute inset-0 h-full w-full rounded-none border-0"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#070b14] via-[#070b14]/35 to-transparent" />
-                <span
-                  className={`absolute left-2 top-2 flex h-7 w-7 items-center justify-center rounded-lg text-xs font-bold shadow-lg backdrop-blur-sm ${
-                    done
-                      ? 'bg-emerald-500/90 text-white'
-                      : 'bg-black/55 text-slate-100'
-                  }`}
-                >
-                  {d.day}
-                </span>
-                {done && (
-                  <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-bold text-white shadow">
-                    ✓
-                  </span>
-                )}
-                <div className="absolute inset-x-0 bottom-0 p-2.5">
-                  <p className="line-clamp-2 text-[11px] font-semibold leading-snug text-white">{d.title}</p>
-                  <p className="mt-0.5 line-clamp-1 text-[10px] text-slate-300">{heroLabel(d)}</p>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-
-      <div className="flex flex-wrap gap-3 text-[10px] text-slate-500">
-        <Legend swatch="bg-cyan-500/30 border-cyan-500/40" label="Train" />
-        <Legend swatch="bg-amber-500/30 border-amber-500/40" label="Active recovery" />
-        <Legend swatch="bg-slate-700 border-slate-600" label="Rest" />
-        <Legend swatch="ring-2 ring-emerald-400" label="Completed" />
-      </div>
-
-      <ul className="space-y-2">
-        {plan.map((d) => {
-          const done = isCompleted(d.day);
-          const animId = getHeroAnimationId(d);
-          return (
-            <li key={d.day}>
-              <Link
-                to={`/day/${d.day}`}
-                className={`flex items-center gap-3 rounded-xl border border-white/5 bg-white/[0.03] p-2 pr-3 transition hover:border-cyan-500/25 ${
-                  done ? 'ring-1 ring-emerald-400/40' : ''
-                }`}
-              >
-                <div
-                  className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-xl ${
-                    d.type === 'rest' ? 'opacity-70' : ''
-                  }`}
-                >
-                  <ExerciseAnimation
-                    animationId={animId}
-                    alt={`${d.title} — ${heroLabel(d)}`}
-                    variant="thumb"
-                    className="h-full w-full rounded-xl"
-                  />
-                  <span
-                    className={`absolute left-1 top-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-[10px] font-bold ${
-                      done ? 'bg-emerald-500 text-white' : 'bg-black/60 text-slate-100'
-                    }`}
-                  >
-                    {d.day}
-                  </span>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="line-clamp-2 text-sm font-medium leading-snug text-slate-100">{d.title}</p>
-                  <p className="truncate text-xs text-slate-500">
-                    {heroLabel(d)}
-                    {d.focus && d.type !== 'rest' ? ` · ${d.focus}` : ''}
-                  </p>
-                </div>
-                <DayTypeBadge type={d.type} />
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+  const { isCompleted, progress, completedCount } = useProgressContext();
+  const today = getTodayPlanDay(progress.completedDays);
+  const [week, setWeek] = useState(
+    Math.min(3, Math.floor((today.day - 1) / 7)),
   );
-}
-
-function Legend({ swatch, label }: { swatch: string; label: string }) {
+  const days = plan.slice(week * 7, week === 3 ? 30 : (week + 1) * 7);
   return (
-    <span className="inline-flex items-center gap-1.5">
-      <span className={`h-3 w-3 rounded border ${swatch}`} />
-      {label}
-    </span>
+    <div className="space-y-6">
+      <div className="page-heading">
+        <div>
+          <p className="eyebrow">YOUR ROAD TO STRONGER</p>
+          <h1>The 30-day plan</h1>
+          <p className="text-slate-400 mt-3">
+            Build your push, pull, and core foundations. One session at a time.
+          </p>
+        </div>
+        <span className="streak-pill">{completedCount} / 30 complete</span>
+      </div>
+      <div
+        className="grid grid-cols-2 sm:grid-cols-4 gap-2"
+        aria-label="Plan weeks"
+      >
+        {chapters.map((name, i) => (
+          <button
+            key={name}
+            aria-pressed={week === i}
+            onClick={() => setWeek(i)}
+            className={`panel text-left ${week === i ? "border-cyan-400! bg-cyan-400/5!" : ""}`}
+          >
+            <span className="eyebrow">WEEK {i + 1}</span>
+            <span className="block text-sm font-semibold mt-2">{name}</span>
+          </button>
+        ))}
+      </div>
+      <div className="space-y-3">
+        {days.map((day) => (
+          <Link
+            key={day.day}
+            to={`/day/${day.day}`}
+            className={`panel flex items-center gap-4 p-3! ${isCompleted(day.day) ? "border-cyan-400/30!" : ""}`}
+          >
+            <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl">
+              <ExerciseAnimation
+                animationId={getHeroAnimationId(day)}
+                alt={day.title}
+                variant="thumb"
+                className="h-full w-full"
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="eyebrow mb-1!">
+                DAY {day.day}
+                {isCompleted(day.day)
+                  ? " · COMPLETE ✓"
+                  : day.day === today.day
+                    ? " · UP NEXT"
+                    : ""}
+              </p>
+              <h2 className="font-semibold text-sm sm:text-base">
+                {day.title}
+              </h2>
+              <p className="text-xs text-slate-400 mt-1">
+                {day.estimatedMinutes
+                  ? `${day.estimatedMinutes} min · ${day.main.length} main exercises`
+                  : "Rest is part of the plan"}
+              </p>
+            </div>
+            <span className="hidden sm:block">
+              <DayTypeBadge type={day.type} />
+            </span>
+            <span aria-hidden="true">↗</span>
+          </Link>
+        ))}
+      </div>
+      <p className="text-sm text-slate-400">
+        Follow the days in order, with recovery between hard sessions. Repeat a
+        day when you need more practice.
+      </p>
+    </div>
   );
 }

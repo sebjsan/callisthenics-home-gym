@@ -21,13 +21,12 @@ export function ExerciseDetail() {
   return (
     <div className="space-y-5">
       <div>
-        <button
-          type="button"
-          onClick={() => history.back()}
+        <Link
+          to="/library"
           className="text-xs font-medium text-cyan-400 hover:text-cyan-300"
         >
-          ← Back
-        </button>
+          ← Exercise library
+        </Link>
         <h1 className="mt-2 text-xl font-bold text-white">{ex.name}</h1>
         <p className="mt-1 text-sm text-slate-400">{ex.description}</p>
       </div>

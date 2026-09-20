@@ -79,3 +79,25 @@ src/
 ## License
 
 Personal / private use for the repo owner.
+
+## Guided training experience
+
+- Responsive men's training dashboard with the next unfinished day, week overview, and actual plan completion.
+- Four plan chapters, including days 29 and 30 in the final chapter.
+- `/library`: searchable exercise names and muscles, combined with equipment filters.
+- `/workout/:dayId`: guided warm-up, main work, and cool-down with individual sets, manual rep completion, hold/rest timers, pause/resume, and explicit workout saving.
+- Session position survives navigation/reload in the same tab. The current step restarts paused; unsaved completed sessions remain ready to save. Replaying a completed day does not remove it from progress.
+- Progress remains device-local under the existing storage key. A visible warning explains when the browser cannot persist it. No account, cross-device sync, or personalized prescription engine is included.
+- The existing exercise images and SVG fallback demos are retained. The design uses original branding, not BetterMe assets.
+
+### Browser regression checks
+
+```bash
+npm ci
+npx playwright install chromium
+npm run test:e2e
+npm run build
+npm run lint
+```
+
+Tests cover desktop and mobile layouts, exercise filtering, finale navigation, timers, session reload, full workout completion, replay, rest days, invalid routes, and unavailable storage. If using an existing Chrome for Testing installation, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to its executable path.

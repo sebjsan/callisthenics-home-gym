@@ -6,6 +6,8 @@ import { DayDetail } from './pages/DayDetail';
 import { ExerciseDetail } from './pages/ExerciseDetail';
 import { Home } from './pages/Home';
 import { ProgressPage } from './pages/Progress';
+import { Library } from './pages/Library';
+import { Workout } from './pages/Workout';
 
 export default function App() {
   return (
@@ -18,6 +20,8 @@ export default function App() {
             <Route path="day/:dayId" element={<DayDetail />} />
             <Route path="exercise/:exerciseId" element={<ExerciseDetail />} />
             <Route path="progress" element={<ProgressPage />} />
+            <Route path="library" element={<Library />} />
+            <Route path="workout/:dayId" element={<Workout />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

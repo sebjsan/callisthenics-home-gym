@@ -48,6 +48,7 @@ export function DayDetail() {
         </div>
       ) : (
         <>
+          <Link className="primary-button w-full" to={`/workout/${day.day}`}>Start guided workout →</Link>
           {day.warmup.length > 0 && (
             <Section title="Warm-up" subtitle="Mat + light bands">
               {day.warmup.map((item, i) => (

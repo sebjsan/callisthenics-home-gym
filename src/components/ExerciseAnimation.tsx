@@ -325,8 +325,8 @@ function MuscleHighlight({
   region: HighlightRegion;
   family: PoseFamily;
 }) {
-  if (region === 'none') return null;
   const { muscleGlow } = useContext(SvgTheme);
+  if (region === 'none') return null;
   const common = {
     className: 'muscle-hl',
     filter: `url(#${muscleGlow})`,
